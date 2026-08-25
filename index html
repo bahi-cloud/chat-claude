@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم المؤسسية الفائقة 2026</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --bg-dark: #07090e;
+      --panel-bg: rgba(18, 24, 38, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-hover: rgba(255, 255, 255, 0.12);
+      
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      --accent-glow: rgba(168, 85, 247, 0.4);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --sidebar-width: 290px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Readex Pro', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Ambient Dynamic Background Glows */
+    .glow-orb {
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      filter: blur(150px);
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-top { top: -150px; right: -150px; }
+    .orb-bottom { bottom: -150px; left: -150px; }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--panel-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-left: 1px solid var(--glass-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem 1.25rem;
+      z-index: 10;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 0.5rem 2rem 0.5rem;
+      border-bottom: 1px solid var(--glass-border);
+      margin-bottom: 2rem;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      background: var(--accent-gradient);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ffffff, var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text span {
+      font-size: 0.75rem;
+      color: #a855f7;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding: 0 0.5rem;
+      font-weight: 600;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    /* Primary Navigation Buttons */
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: right;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-btn i {
+      font-size: 1.25rem;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--glass-hover);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 10px 30px var(--accent-glow);
+    }
+
+    .nav-btn.active i {
+      transform: scale(1.15);
+    }
+
+    /* Enterprise Status Badge */
+    .footer-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .footer-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: white;
+    }
+
+    /* Main View Area (Iframe Host) */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-bar {
+      height: 75px;
+      border-bottom: 1px solid var(--glass-border);
+      background: var(--panel-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+    }
+
+    .page-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .page-heading h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .status-pulse {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Container for dynamic external files loading */
+    .iframe-container {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 75px);
+      position: relative;
+      background: transparent;
+    }
+
+    .content-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: transparent;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; }
+      .main-wrapper { height: calc(100vh - 200px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-orb orb-top"></div>
+  <div class="glow-orb orb-bottom"></div>
+
+  <!-- Sidebar Component -->
+  <aside class="sidebar">
+    <div>
+      <!-- Brand Logo -->
+      <div class="brand-section">
+        <div class="brand-logo">
+          <i class="fa-solid fa-atom"></i>
+        </div>
+        <div class="brand-text">
+          <h1>منصة الذكاء 2026</h1>
+          <span>ENTERPRISE AI OS</span>
+        </div>
+      </div>
+
+      <div class="nav-section-title">الوظائف السحابية الاستدعائية</div>
+      
+      <!-- Only Two Core Nav Buttons strictly calling external html files -->
+      <ul class="nav-list">
+        <li>
+          <button id="btn-chat" class="nav-btn active" onclick="loadPage('chat.html', 'chat')">
+            <i class="fa-solid fa-robot"></i>
+            <span>الوكيل الذكي العام</span>
+          </button>
+        </li>
+        <li>
+          <button id="btn-saha" class="nav-btn" onclick="loadPage('saha.html', 'saha')">
+            <i class="fa-solid fa-brain-circuit"></i>
+            <span>ساحة النقاش العبقرية للوكلاء</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Company Badge -->
+    <div class="footer-card">
+      <div class="footer-avatar">AI</div>
+      <div>
+        <div style="font-weight: 700; font-size: 0.85rem;">المؤسسة الذكية 2026</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">ربط مباشر للملفات (Active)</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Display Wrapper -->
+  <main class="main-wrapper">
+    <!-- Header -->
+    <header class="top-bar">
+      <div class="page-heading">
+        <i class="fa-solid fa-layer-group" style="color: #a855f7;"></i>
+        <h2 id="currentTitle">الوكيل الذكي العام</h2>
+      </div>
+      <div class="system-status">
+        <span class="status-pulse"></span>
+        <span>استدعاء مباشر للملف المصدري</span>
+      </div>
+    </header>
+
+    <!-- Dynamic External Frame (Calls chat.html & saha.html) -->
+    <section class="iframe-container">
+      <iframe id="appFrame" class="content-frame" src="chat.html" title="المحتوى المستدعى"></iframe>
+    </section>
+  </main>
+
+  <script>
+    /**
+     * Dynamic Page Loading Architecture
+     * @param {string} fileUrl - Path to external HTML file (chat.html or saha.html)
+     * @param {string} pageKey - Identifier key ('chat' or 'saha')
+     */
+    function loadPage(fileUrl, pageKey) {
+      const frame = document.getElementById('appFrame');
+      const btnChat = document.getElementById('btn-chat');
+      const btnSaha = document.getElementById('btn-saha');
+      const titleElem = document.getElementById('currentTitle');
+
+      // Update Frame Source dynamically to fetch target page
+      frame.src = fileUrl;
+
+      // Update Navigation Active States & Page Title
+      if (pageKey === 'chat') {
+        btnChat.classList.add('active');
+        btnSaha.classList.remove('active');
+        titleElem.innerText = 'الوكيل الذكي العام (chat.html)';
+      } else if (pageKey === 'saha') {
+        btnSaha.classList.add('active');
+        btnChat.classList.remove('active');
+        titleElem.innerText = 'ساحة النقاش العبقرية للوكلاء (saha.html)';
+      }
+    }
+  </script>
+</body>
+</html>
