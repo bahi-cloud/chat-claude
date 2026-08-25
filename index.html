@@ -6,12 +6,13 @@
 
 <title>BAHI CLOUD — Neural Command Center</title>
 
-<meta name="theme-color" content="#05070d">
+<meta name="theme-color" content="#03050a">
 
 <style>
+
 /* =========================================================
-   BAHI CLOUD — 2026 NEON CYBER APP SHELL
-   Micro-Frontend Dashboard
+   BAHI CLOUD 2026
+   PROFESSIONAL MICRO-FRONTEND APP SHELL
 ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700&display=swap');
@@ -20,29 +21,28 @@
     --bg:#03050a;
     --bg2:#070b13;
 
-    --glass:rgba(10,16,28,.72);
-    --glass2:rgba(15,23,40,.58);
+    --glass:rgba(8,14,25,.78);
+    --glass-soft:rgba(255,255,255,.035);
 
-    --border:rgba(255,255,255,.09);
-    --border2:rgba(0,245,255,.22);
+    --line:rgba(255,255,255,.075);
+    --line-cyan:rgba(0,245,255,.22);
 
-    --text:#f4f8ff;
-    --muted:#8290a8;
+    --text:#f5f8ff;
+    --muted:#7f8da5;
 
     --cyan:#00f5ff;
     --blue:#3b82ff;
     --violet:#8b5cf6;
     --green:#00ff9d;
-    --pink:#ff2bd6;
+    --pink:#ff35d5;
 
-    --sidebar:245px;
-    --topbar:58px;
+    --sidebar-width:275px;
+
+    --ease:cubic-bezier(.2,.8,.2,1);
 
     --shadow:
-      0 20px 70px rgba(0,0,0,.45),
-      inset 0 1px 0 rgba(255,255,255,.04);
-
-    --transition:.28s cubic-bezier(.2,.8,.2,1);
+        0 25px 80px rgba(0,0,0,.48),
+        inset 0 1px 0 rgba(255,255,255,.035);
 }
 
 *{
@@ -51,82 +51,83 @@
 
 html,
 body{
-    margin:0;
     width:100%;
     height:100%;
-    overflow:hidden;
-    background:var(--bg);
-    color:var(--text);
-    font-family:"Cairo",sans-serif;
+    margin:0;
 }
 
-button,
-input{
-    font:inherit;
+body{
+    overflow:hidden;
+
+    color:var(--text);
+
+    font-family:"Cairo",sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 15%,
+            rgba(0,245,255,.08),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(139,92,246,.10),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(0,255,157,.05),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #02040a,
+            #070a14 50%,
+            #02040a
+        );
 }
 
 /* =========================================================
-   BACKGROUND
+   GRID / AMBIENT
 ========================================================= */
 
 body::before{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-5;
 
-    background:
-      radial-gradient(
-        circle at 10% 15%,
-        rgba(0,245,255,.10),
-        transparent 28%
-      ),
-      radial-gradient(
-        circle at 90% 20%,
-        rgba(139,92,246,.12),
-        transparent 30%
-      ),
-      radial-gradient(
-        circle at 50% 100%,
-        rgba(0,255,157,.06),
-        transparent 35%
-      ),
-      linear-gradient(
-        135deg,
-        #02040a 0%,
-        #060914 50%,
-        #02040a 100%
-      );
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
     pointer-events:none;
-    z-index:9999;
+    z-index:0;
 
     background:
-      linear-gradient(
-        rgba(255,255,255,.012) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        90deg,
-        rgba(255,255,255,.012) 1px,
-        transparent 1px
-      );
+        linear-gradient(
+            rgba(255,255,255,.012) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.012) 1px,
+            transparent 1px
+        );
 
-    background-size:50px 50px;
-    mask-image:linear-gradient(to bottom,black,transparent);
+    background-size:48px 48px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 95%
+        );
 }
 
 /* =========================================================
-   APP SHELL
+   APP
 ========================================================= */
 
 .app{
-    display:flex;
+    position:relative;
+    z-index:1;
+
     width:100%;
     height:100vh;
 }
@@ -136,102 +137,178 @@ body::after{
 ========================================================= */
 
 .sidebar{
-    width:var(--sidebar);
-    height:100vh;
+    position:fixed;
 
-    position:relative;
-    z-index:100;
+    top:12px;
+    right:12px;
+    bottom:12px;
+
+    width:var(--sidebar-width);
+
+    z-index:1000;
 
     display:flex;
     flex-direction:column;
 
-    padding:14px 10px;
+    padding:14px;
+
+    border:1px solid var(--line);
+    border-radius:22px;
 
     background:
-      linear-gradient(
-        180deg,
-        rgba(8,13,24,.88),
-        rgba(4,8,15,.94)
-      );
+        linear-gradient(
+            145deg,
+            rgba(12,19,33,.92),
+            rgba(5,9,17,.94)
+        );
 
-    border-left:1px solid var(--border);
-
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
+    backdrop-filter:blur(30px) saturate(140%);
+    -webkit-backdrop-filter:blur(30px) saturate(140%);
 
     box-shadow:
-      20px 0 80px rgba(0,0,0,.25);
+        0 30px 100px rgba(0,0,0,.6),
+        0 0 50px rgba(0,245,255,.035);
 
-    transition:width var(--transition);
+    transform:
+        translateX(
+            calc(100% + 35px)
+        );
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:
+        transform .35s var(--ease),
+        opacity .25s ease,
+        visibility .35s;
 }
 
-.sidebar.collapsed{
-    width:72px;
+.sidebar.open{
+    transform:translateX(0);
+    opacity:1;
+    visibility:visible;
 }
 
 /* =========================================================
-   LOGO
+   SIDEBAR GLOW
+========================================================= */
+
+.sidebar::before{
+    content:"";
+
+    position:absolute;
+
+    width:160px;
+    height:160px;
+
+    top:-70px;
+    right:-50px;
+
+    border-radius:50%;
+
+    background:var(--cyan);
+
+    filter:blur(90px);
+
+    opacity:.08;
+
+    pointer-events:none;
+}
+
+/* =========================================================
+   BRAND
 ========================================================= */
 
 .brand{
-    height:42px;
+    position:relative;
 
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:11px;
 
-    padding:0 8px;
-    margin-bottom:14px;
+    min-height:45px;
 
-    white-space:nowrap;
+    padding:0 5px 12px;
+
+    border-bottom:1px solid var(--line);
 }
 
 .brand-icon{
-    width:34px;
-    height:34px;
+    width:37px;
+    height:37px;
 
     display:grid;
     place-items:center;
 
-    border-radius:11px;
+    flex:none;
 
-    background:
-      linear-gradient(
-        135deg,
-        rgba(0,245,255,.2),
-        rgba(139,92,246,.2)
-      );
-
-    border:1px solid var(--border2);
-
-    box-shadow:
-      0 0 25px rgba(0,245,255,.12);
+    border-radius:12px;
 
     color:var(--cyan);
-    font-size:17px;
+
+    font-size:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.15),
+            rgba(139,92,246,.16)
+        );
+
+    border:1px solid var(--line-cyan);
+
+    box-shadow:
+        0 0 30px rgba(0,245,255,.10);
 }
 
 .brand-name{
     font-family:"Orbitron",sans-serif;
+
     font-size:13px;
     font-weight:700;
-    letter-spacing:1.3px;
 
-    transition:opacity var(--transition);
+    letter-spacing:1.5px;
 }
 
 .brand-name span{
     color:var(--cyan);
 }
 
-.sidebar.collapsed .brand-name{
-    opacity:0;
-    width:0;
-    overflow:hidden;
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.close-sidebar{
+    position:absolute;
+
+    left:8px;
+    top:8px;
+
+    width:29px;
+    height:29px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--line);
+    border-radius:8px;
+
+    background:rgba(255,255,255,.025);
+
+    color:#718097;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.close-sidebar:hover{
+    color:white;
+    border-color:var(--line-cyan);
 }
 
 /* =========================================================
-   STATUS
+   SYSTEM
 ========================================================= */
 
 .system-status{
@@ -239,62 +316,52 @@ body::after{
     align-items:center;
     gap:8px;
 
-    padding:8px 10px;
-    margin-bottom:12px;
+    margin:13px 0;
 
-    border:1px solid var(--border);
-    border-radius:12px;
+    padding:9px 11px;
 
-    background:rgba(255,255,255,.025);
+    border:1px solid rgba(0,255,157,.10);
+    border-radius:11px;
 
-    font-size:10px;
-    color:var(--muted);
+    background:rgba(0,255,157,.025);
 
-    white-space:nowrap;
-    overflow:hidden;
+    color:#769182;
+
+    font-size:9px;
 }
 
 .status-dot{
-    width:7px;
-    height:7px;
-    flex:0 0 7px;
+    width:6px;
+    height:6px;
+
+    flex:none;
 
     border-radius:50%;
 
     background:var(--green);
 
     box-shadow:
-      0 0 12px var(--green);
-}
-
-.sidebar.collapsed .system-status{
-    justify-content:center;
-}
-
-.sidebar.collapsed .system-status span{
-    display:none;
+        0 0 12px var(--green);
 }
 
 /* =========================================================
-   NAVIGATION
+   NAV TITLE
 ========================================================= */
 
-.nav-label{
-    padding:8px 10px 5px;
+.nav-title{
+    padding:3px 8px 8px;
 
     color:#536078;
 
-    font-size:9px;
-    font-weight:700;
+    font-family:"Orbitron",sans-serif;
 
-    letter-spacing:1.2px;
-
-    transition:opacity var(--transition);
+    font-size:8px;
+    letter-spacing:1.4px;
 }
 
-.sidebar.collapsed .nav-label{
-    opacity:0;
-}
+/* =========================================================
+   NAV
+========================================================= */
 
 .nav{
     display:flex;
@@ -303,35 +370,44 @@ body::after{
 }
 
 .nav-item{
+    position:relative;
+
     width:100%;
-    height:43px;
-
-    border:1px solid transparent;
-    border-radius:12px;
-
-    background:transparent;
-
-    color:#8e9bb0;
+    min-height:49px;
 
     display:flex;
     align-items:center;
-    gap:11px;
 
-    padding:0 11px;
+    gap:12px;
+
+    padding:0 12px;
+
+    border:1px solid transparent;
+    border-radius:13px;
+
+    background:transparent;
+
+    color:#8b98ac;
+
+    text-align:right;
 
     cursor:pointer;
 
     transition:
-      background var(--transition),
-      color var(--transition),
-      border var(--transition),
-      transform var(--transition);
+        background .22s,
+        border .22s,
+        color .22s,
+        transform .22s;
 }
 
 .nav-item:hover{
     color:white;
-    background:rgba(255,255,255,.045);
-    border-color:var(--border);
+
+    background:
+        rgba(255,255,255,.035);
+
+    border-color:var(--line);
+
     transform:translateX(-2px);
 }
 
@@ -339,41 +415,83 @@ body::after{
     color:white;
 
     background:
-      linear-gradient(
-        100deg,
-        rgba(0,245,255,.12),
-        rgba(59,130,255,.07)
-      );
+        linear-gradient(
+            100deg,
+            rgba(0,245,255,.12),
+            rgba(59,130,255,.055)
+        );
 
-    border-color:rgba(0,245,255,.18);
+    border-color:
+        rgba(0,245,255,.18);
 
     box-shadow:
-      inset 0 0 25px rgba(0,245,255,.035),
-      0 0 22px rgba(0,245,255,.04);
+        inset 0 0 25px rgba(0,245,255,.025);
+}
+
+.nav-item.active::before{
+    content:"";
+
+    position:absolute;
+
+    right:-1px;
+
+    top:10px;
+    bottom:10px;
+
+    width:2px;
+
+    border-radius:10px;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 12px var(--cyan);
 }
 
 .nav-icon{
-    width:21px;
-    text-align:center;
-    font-size:16px;
-    flex:0 0 21px;
+    width:28px;
+    height:28px;
+
+    display:grid;
+    place-items:center;
+
+    flex:none;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.035);
+
+    font-size:15px;
 }
 
-.nav-text{
-    font-size:12px;
-    font-weight:600;
+.nav-item.active .nav-icon{
+    background:rgba(0,245,255,.07);
+}
+
+.nav-content{
+    display:flex;
+    flex-direction:column;
+
+    min-width:0;
+}
+
+.nav-name{
+    font-size:11px;
+    font-weight:700;
+}
+
+.nav-desc{
+    margin-top:1px;
+
+    color:#58667b;
+
+    font-size:8px;
 
     white-space:nowrap;
-
-    transition:
-      opacity var(--transition),
-      width var(--transition);
 }
 
-.sidebar.collapsed .nav-text{
-    opacity:0;
-    width:0;
-    overflow:hidden;
+.nav-item.active .nav-desc{
+    color:#71879b;
 }
 
 /* =========================================================
@@ -382,28 +500,50 @@ body::after{
 
 .sidebar-footer{
     margin-top:auto;
+
+    padding-top:12px;
+
+    border-top:1px solid var(--line);
 }
 
-.collapse-btn{
-    width:100%;
-    height:40px;
+.version{
+    color:#4f5c70;
 
-    border:1px solid var(--border);
-    border-radius:11px;
+    font-family:"Orbitron",sans-serif;
 
-    background:rgba(255,255,255,.025);
+    font-size:7px;
+    letter-spacing:1px;
 
-    color:#8290a8;
-
-    cursor:pointer;
-
-    transition:.2s;
+    text-align:center;
 }
 
-.collapse-btn:hover{
-    color:white;
-    border-color:rgba(0,245,255,.25);
-    background:rgba(0,245,255,.05);
+/* =========================================================
+   BACKDROP
+========================================================= */
+
+.sidebar-backdrop{
+    position:fixed;
+    inset:0;
+
+    z-index:900;
+
+    background:
+        rgba(0,0,0,.42);
+
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:
+        opacity .3s,
+        visibility .3s;
+}
+
+.sidebar-backdrop.active{
+    opacity:1;
+    visibility:visible;
 }
 
 /* =========================================================
@@ -411,109 +551,140 @@ body::after{
 ========================================================= */
 
 .main{
-    min-width:0;
-    flex:1;
-
+    width:100%;
     height:100vh;
 
     display:flex;
     flex-direction:column;
-
-    overflow:hidden;
 }
 
 /* =========================================================
-   TOPBAR
+   TOP BAR
 ========================================================= */
 
 .topbar{
-    height:var(--topbar);
-    flex:0 0 var(--topbar);
+    height:60px;
+
+    flex:none;
 
     display:flex;
     align-items:center;
 
-    gap:12px;
+    gap:10px;
 
     padding:0 15px;
 
-    border-bottom:1px solid var(--border);
+    border-bottom:1px solid var(--line);
 
-    background:rgba(4,7,14,.64);
+    background:
+        rgba(3,7,14,.62);
 
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
 }
 
-.mobile-menu{
-    display:none;
-}
+.menu-button{
+    width:36px;
+    height:36px;
 
-.page-title{
-    display:flex;
-    align-items:center;
-    gap:8px;
+    display:grid;
+    place-items:center;
 
-    font-size:13px;
-    font-weight:700;
-}
-
-.page-title small{
-    color:#59677e;
-    font-size:9px;
-    font-family:"Orbitron",sans-serif;
-}
-
-.top-spacer{
-    flex:1;
-}
-
-.live-pill{
-    display:flex;
-    align-items:center;
-    gap:7px;
-
-    padding:5px 10px;
-
-    border:1px solid rgba(0,255,157,.15);
-    border-radius:30px;
-
-    background:rgba(0,255,157,.035);
-
-    color:#7cebc0;
-    font-size:9px;
-}
-
-.live-dot{
-    width:5px;
-    height:5px;
-
-    border-radius:50%;
-    background:var(--green);
-
-    box-shadow:0 0 9px var(--green);
-}
-
-.icon-btn{
-    width:32px;
-    height:32px;
-
-    border:1px solid var(--border);
-    border-radius:9px;
+    border:1px solid var(--line);
+    border-radius:10px;
 
     background:rgba(255,255,255,.025);
 
-    color:#8794a9;
+    color:#9aa7ba;
 
     cursor:pointer;
 
     transition:.2s;
 }
 
-.icon-btn:hover{
+.menu-button:hover{
     color:white;
-    border-color:rgba(0,245,255,.2);
-    background:rgba(0,245,255,.04);
+
+    border-color:var(--line-cyan);
+
+    background:rgba(0,245,255,.045);
+}
+
+.page-title{
+    display:flex;
+    flex-direction:column;
+
+    line-height:1.1;
+}
+
+.page-title strong{
+    font-size:12px;
+}
+
+.page-title span{
+    margin-top:3px;
+
+    color:#4e5b70;
+
+    font-family:"Orbitron",sans-serif;
+
+    font-size:7px;
+    letter-spacing:1px;
+}
+
+.top-space{
+    flex:1;
+}
+
+.system-pill{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    padding:6px 10px;
+
+    border:1px solid rgba(0,255,157,.11);
+    border-radius:20px;
+
+    color:#759384;
+
+    background:rgba(0,255,157,.025);
+
+    font-size:8px;
+}
+
+.system-pill i{
+    width:5px;
+    height:5px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 10px var(--green);
+}
+
+.top-button{
+    width:34px;
+    height:34px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--line);
+    border-radius:9px;
+
+    background:rgba(255,255,255,.025);
+
+    color:#8190a5;
+
+    cursor:pointer;
+}
+
+.top-button:hover{
+    color:white;
+    border-color:var(--line-cyan);
 }
 
 /* =========================================================
@@ -522,7 +693,9 @@ body::after{
 
 .workspace{
     position:relative;
+
     flex:1;
+
     min-height:0;
 
     overflow:hidden;
@@ -538,26 +711,33 @@ body::after{
 
     overflow:auto;
 
-    padding:25px;
+    padding:30px 25px;
 
     transition:
-      opacity .25s,
-      transform .25s;
+        opacity .25s,
+        transform .25s;
 }
 
 .home.hidden{
     opacity:0;
     pointer-events:none;
-    transform:scale(.99);
+
+    transform:scale(.985);
 }
 
-/* HERO */
+.home-inner{
+    width:100%;
+    max-width:1150px;
+
+    margin:auto;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
-    max-width:1050px;
-    margin:0 auto;
-
-    padding:32px 0 22px;
+    padding:30px 0 26px;
 }
 
 .eyebrow{
@@ -565,29 +745,30 @@ body::after{
 
     font-family:"Orbitron",sans-serif;
 
-    font-size:9px;
-    letter-spacing:2px;
+    font-size:8px;
 
-    margin-bottom:10px;
+    letter-spacing:2px;
 }
 
 .hero h1{
-    margin:0;
+    margin:9px 0 0;
 
-    font-size:clamp(25px,4vw,45px);
-    line-height:1.25;
+    font-size:
+        clamp(28px,4vw,50px);
+
+    line-height:1.2;
 
     letter-spacing:-1.5px;
 }
 
 .hero h1 span{
     background:
-      linear-gradient(
-        90deg,
-        var(--cyan),
-        #8aa9ff,
-        var(--violet)
-      );
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            #9ab0ff,
+            var(--violet)
+        );
 
     -webkit-background-clip:text;
     background-clip:text;
@@ -596,121 +777,169 @@ body::after{
 }
 
 .hero p{
-    max-width:670px;
+    max-width:690px;
 
     margin:12px 0 0;
 
     color:var(--muted);
 
-    font-size:12px;
+    font-size:11px;
+
     line-height:2;
 }
 
 /* =========================================================
-   CARDS
+   APPLICATION GRID
 ========================================================= */
 
-.cards{
-    max-width:1050px;
-    margin:auto;
-
+.apps-grid{
     display:grid;
-    grid-template-columns:
-      repeat(3, minmax(0,1fr));
 
-    gap:12px;
+    grid-template-columns:
+        repeat(3,minmax(0,1fr));
+
+    gap:13px;
 }
 
-.card{
-    min-height:125px;
+/* =========================================================
+   APP CARD
+========================================================= */
 
+.app-card{
     position:relative;
+
+    min-height:185px;
+
     overflow:hidden;
 
-    padding:18px;
+    padding:20px;
 
-    border:1px solid var(--border);
-    border-radius:17px;
+    border:1px solid var(--line);
+    border-radius:19px;
 
     background:
-      linear-gradient(
-        145deg,
-        rgba(255,255,255,.045),
-        rgba(255,255,255,.015)
-      );
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
 
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
+    backdrop-filter:blur(20px);
 
     box-shadow:var(--shadow);
 
     transition:
-      transform .25s,
-      border .25s;
+        transform .25s,
+        border .25s;
 }
 
-.card::after{
+.app-card::before{
     content:"";
 
     position:absolute;
 
-    width:100px;
-    height:100px;
+    width:120px;
+    height:120px;
 
-    top:-60px;
-    left:-40px;
+    top:-65px;
+    left:-50px;
+
+    border-radius:50%;
 
     background:var(--cyan);
 
-    filter:blur(60px);
+    filter:blur(65px);
 
     opacity:.08;
 }
 
-.card:hover{
-    transform:translateY(-3px);
-    border-color:rgba(0,245,255,.18);
+.app-card:hover{
+    transform:translateY(-4px);
+
+    border-color:
+        rgba(0,245,255,.20);
 }
 
-.card-icon{
-    font-size:22px;
-    margin-bottom:8px;
+.app-card.purple::before{
+    background:var(--violet);
 }
 
-.card h3{
-    margin:0 0 4px;
+.app-card.pink::before{
+    background:var(--pink);
+}
+
+.app-card-icon{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    margin-bottom:14px;
+
+    border:1px solid var(--line);
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.035);
+
+    font-size:19px;
+}
+
+.app-card h3{
+    margin:0;
 
     font-size:13px;
 }
 
-.card p{
-    margin:0;
-
-    color:var(--muted);
-
-    font-size:10px;
-    line-height:1.8;
-}
-
-.launch{
-    margin-top:13px;
-
-    padding:6px 10px;
-
-    border:1px solid rgba(0,245,255,.16);
-    border-radius:8px;
+.app-card .subtitle{
+    margin-top:3px;
 
     color:var(--cyan);
 
-    background:rgba(0,245,255,.04);
+    font-family:"Orbitron",sans-serif;
+
+    font-size:8px;
+
+    letter-spacing:.5px;
+}
+
+.app-card p{
+    margin:10px 0 15px;
+
+    color:#68768b;
+
+    font-size:9px;
+
+    line-height:1.9;
+}
+
+.open-app{
+    padding:7px 12px;
+
+    border:1px solid rgba(0,245,255,.15);
+    border-radius:8px;
+
+    background:rgba(0,245,255,.035);
+
+    color:var(--cyan);
 
     font-size:9px;
 
     cursor:pointer;
+
+    transition:.2s;
+}
+
+.open-app:hover{
+    background:rgba(0,245,255,.08);
+
+    border-color:
+        rgba(0,245,255,.28);
 }
 
 /* =========================================================
-   APP VIEW
+   MICRO FRONTEND VIEW
 ========================================================= */
 
 .app-view{
@@ -718,25 +947,47 @@ body::after{
     inset:0;
 
     display:flex;
-    flex-direction:column;
 
-    background:#03060c;
+    overflow:hidden;
+
+    background:#02050b;
 
     opacity:0;
-    pointer-events:none;
+    visibility:hidden;
 
-    transform:translateY(7px);
+    transform:scale(.99);
 
     transition:
-      opacity .25s,
-      transform .25s;
+        opacity .25s,
+        transform .25s,
+        visibility .25s;
 }
 
 .app-view.active{
     opacity:1;
-    pointer-events:auto;
-    transform:none;
+    visibility:visible;
+
+    transform:scale(1);
 }
+
+/* =========================================================
+   IFRAME
+========================================================= */
+
+.app-frame{
+    width:100%;
+    height:100%;
+
+    flex:1;
+
+    border:0;
+
+    background:#fff;
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
 
 .app-loader{
     position:absolute;
@@ -748,33 +999,34 @@ body::after{
     place-items:center;
 
     background:
-      radial-gradient(
-        circle,
-        rgba(0,245,255,.04),
-        rgba(2,4,9,.96)
-      );
+        radial-gradient(
+            circle at center,
+            rgba(0,245,255,.035),
+            rgba(2,5,11,.98)
+        );
 
-    transition:opacity .3s;
+    transition:
+        opacity .3s;
 }
 
-.loader-content{
+.loader-box{
     text-align:center;
 }
 
 .loader-ring{
-    width:42px;
-    height:42px;
+    width:45px;
+    height:45px;
 
-    margin:auto auto 12px;
+    margin:auto auto 13px;
 
-    border-radius:50%;
-
-    border:
-      2px solid rgba(0,245,255,.08);
+    border:2px solid rgba(0,245,255,.08);
 
     border-top-color:var(--cyan);
 
-    animation:spin .8s linear infinite;
+    border-radius:50%;
+
+    animation:
+        spin .8s linear infinite;
 }
 
 @keyframes spin{
@@ -783,179 +1035,374 @@ body::after{
     }
 }
 
-.loader-text{
-    color:#65748b;
+.loader-box strong{
+    display:block;
+
     font-size:10px;
 }
 
-/* IFRAME */
+.loader-box span{
+    display:block;
 
-.app-frame{
-    width:100%;
-    height:100%;
+    margin-top:5px;
 
-    border:0;
+    color:#56657a;
 
-    background:white;
-
-    flex:1;
+    font-size:8px;
 }
 
 /* =========================================================
-   MOBILE
+   IFRAME ERROR / FALLBACK
 ========================================================= */
 
-@media(max-width:800px){
+.frame-fallback{
+    position:absolute;
+    inset:0;
+
+    z-index:30;
+
+    display:none;
+
+    place-items:center;
+
+    padding:20px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,245,255,.04),
+            #02050b 60%
+        );
+}
+
+.fallback-box{
+    max-width:440px;
+
+    padding:30px;
+
+    text-align:center;
+
+    border:1px solid var(--line);
+    border-radius:20px;
+
+    background:
+        rgba(10,16,28,.82);
+
+    backdrop-filter:blur(25px);
+}
+
+.fallback-icon{
+    font-size:32px;
+
+    margin-bottom:12px;
+}
+
+.fallback-box h3{
+    margin:0 0 8px;
+
+    font-size:15px;
+}
+
+.fallback-box p{
+    margin:0 0 17px;
+
+    color:#68768b;
+
+    font-size:10px;
+
+    line-height:1.9;
+}
+
+.external-btn{
+    padding:9px 15px;
+
+    border:1px solid rgba(0,245,255,.2);
+    border-radius:9px;
+
+    background:rgba(0,245,255,.05);
+
+    color:var(--cyan);
+
+    text-decoration:none;
+
+    font-size:10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .apps-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:650px){
 
     .sidebar{
-        position:absolute;
-        right:0;
-        top:0;
-        bottom:0;
+        top:8px;
+        right:8px;
+        bottom:8px;
 
-        transform:translateX(100%);
-
-        transition:
-          transform var(--transition),
-          width var(--transition);
-
-        box-shadow:
-          -30px 0 80px rgba(0,0,0,.5);
+        width:
+            min(
+                var(--sidebar-width),
+                calc(100vw - 16px)
+            );
     }
-
-    .sidebar.mobile-open{
-        transform:translateX(0);
-    }
-
-    .mobile-menu{
-        display:block;
-    }
-
-    .cards{
-        grid-template-columns:1fr;
-    }
-
-    .home{
-        padding:18px;
-    }
-
-    .hero{
-        padding-top:20px;
-    }
-
-    .hero h1{
-        font-size:26px;
-    }
-
-    .live-pill{
-        display:none;
-    }
-}
-
-/* =========================================================
-   SMALL SCREEN
-========================================================= */
-
-@media(max-width:480px){
 
     .topbar{
+        height:56px;
+
         padding:0 9px;
     }
 
-    .page-title small{
+    .system-pill{
         display:none;
     }
 
-    .hero p{
+    .home{
+        padding:18px 15px;
+    }
+
+    .hero{
+        padding:20px 0;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .apps-grid{
+        grid-template-columns:1fr;
+    }
+
+    .app-card{
+        min-height:165px;
+    }
+
+}
+
+@media(max-width:380px){
+
+    .brand-name{
         font-size:11px;
     }
 
-    .card{
-        min-height:110px;
+    .nav-name{
+        font-size:10px;
     }
+
+    .hero h1{
+        font-size:25px;
+    }
+
 }
 
 /* =========================================================
-   REDUCED MOTION
+   ACCESSIBILITY
 ========================================================= */
+
+button:focus-visible,
+a:focus-visible{
+    outline:2px solid var(--cyan);
+    outline-offset:2px;
+}
 
 @media(prefers-reduced-motion:reduce){
 
     *,
     *::before,
     *::after{
-        animation:none !important;
-        transition:none !important;
+        animation:none!important;
+        transition:none!important;
     }
+
 }
 
 </style>
 </head>
+
 
 <body>
 
 <div class="app">
 
     <!-- =====================================================
+         SIDEBAR BACKDROP
+    ====================================================== -->
+
+    <div
+        class="sidebar-backdrop"
+        id="sidebarBackdrop">
+    </div>
+
+
+    <!-- =====================================================
          SIDEBAR
     ====================================================== -->
 
-    <aside class="sidebar" id="sidebar">
+    <aside
+        class="sidebar"
+        id="sidebar"
+        aria-label="القائمة الرئيسية"
+    >
+
+        <button
+            class="close-sidebar"
+            id="closeSidebar"
+            aria-label="إغلاق القائمة"
+        >
+            ×
+        </button>
+
 
         <div class="brand">
-            <div class="brand-icon">✦</div>
+
+            <div class="brand-icon">
+                ✦
+            </div>
 
             <div class="brand-name">
                 BAHI <span>CLOUD</span>
             </div>
+
         </div>
+
 
         <div class="system-status">
+
             <span class="status-dot"></span>
-            <span>NEURAL CORE ONLINE</span>
+
+            <span>
+                NEURAL CORE ONLINE
+            </span>
+
         </div>
 
-        <div class="nav-label">
+
+        <div class="nav-title">
             COMMAND CENTER
         </div>
 
+
         <nav class="nav">
+
+            <!-- HOME -->
 
             <button
                 class="nav-item active"
                 data-page="home"
             >
-                <span class="nav-icon">⌂</span>
-                <span class="nav-text">الرئيسية</span>
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span class="nav-content">
+
+                    <span class="nav-name">
+                        الرئيسية
+                    </span>
+
+                    <span class="nav-desc">
+                        مركز القيادة
+                    </span>
+
+                </span>
+
             </button>
+
+
+            <!-- AGENT -->
 
             <button
                 class="nav-item"
                 data-page="agent"
             >
-                <span class="nav-icon">🤖</span>
-                <span class="nav-text">الوكيل الخارق</span>
+
+                <span class="nav-icon">
+                    🤖
+                </span>
+
+                <span class="nav-content">
+
+                    <span class="nav-name">
+                        الوكيل الخارق
+                    </span>
+
+                    <span class="nav-desc">
+                        Super AI Agent
+                    </span>
+
+                </span>
+
             </button>
+
+
+            <!-- DEBATE -->
 
             <button
                 class="nav-item"
                 data-page="debate"
             >
-                <span class="nav-icon">⚡</span>
-                <span class="nav-text">ساحة النقاش</span>
+
+                <span class="nav-icon">
+                    ⚡
+                </span>
+
+                <span class="nav-content">
+
+                    <span class="nav-name">
+                        ساحة النقاش
+                    </span>
+
+                    <span class="nav-desc">
+                        Intelligent Debate
+                    </span>
+
+                </span>
+
+            </button>
+
+
+            <!-- DUCK -->
+
+            <button
+                class="nav-item"
+                data-page="models"
+            >
+
+                <span class="nav-icon">
+                    ◈
+                </span>
+
+                <span class="nav-content">
+
+                    <span class="nav-name">
+                        النماذج الخارقة
+                    </span>
+
+                    <span class="nav-desc">
+                        GPT 5.6 Luna
+                    </span>
+
+                </span>
+
             </button>
 
         </nav>
 
+
         <div class="sidebar-footer">
 
-            <button
-                class="collapse-btn"
-                id="collapseBtn"
-                title="طي القائمة"
-            >
-                ⇠
-            </button>
+            <div class="version">
+                BAHI NEURAL OS · 2026
+            </div>
 
         </div>
 
@@ -968,32 +1415,51 @@ body::after{
 
     <main class="main">
 
-        <!-- TOPBAR -->
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
 
         <header class="topbar">
 
             <button
-                class="icon-btn mobile-menu"
-                id="mobileMenu"
+                class="menu-button"
+                id="menuButton"
+                aria-label="فتح القائمة"
+                aria-expanded="false"
             >
                 ☰
             </button>
 
+
             <div class="page-title">
-                <span id="pageTitle">مركز القيادة</span>
-                <small>APP SHELL / 2026</small>
+
+                <strong id="pageTitle">
+                    مركز القيادة
+                </strong>
+
+                <span>
+                    NEURAL COMMAND CENTER / 2026
+                </span>
+
             </div>
 
-            <div class="top-spacer"></div>
 
-            <div class="live-pill">
-                <span class="live-dot"></span>
+            <div class="top-space"></div>
+
+
+            <div class="system-pill">
+
+                <i></i>
+
                 SYSTEM ONLINE
+
             </div>
+
 
             <button
-                class="icon-btn"
-                id="fullscreenBtn"
+                class="top-button"
+                id="fullscreenButton"
                 title="ملء الشاشة"
             >
                 ⛶
@@ -1002,121 +1468,149 @@ body::after{
         </header>
 
 
-        <!-- WORKSPACE -->
+        <!-- =================================================
+             WORKSPACE
+        ================================================== -->
 
         <section class="workspace">
 
-            <!-- =================================================
+
+            <!-- =============================================
                  HOME
-            ================================================== -->
+            ============================================== -->
 
             <section
                 class="home"
                 id="home"
             >
 
-                <div class="hero">
+                <div class="home-inner">
 
-                    <div class="eyebrow">
-                        NEURAL COMMAND CENTER
+
+                    <div class="hero">
+
+                        <div class="eyebrow">
+                            NEURAL COMMAND CENTER
+                        </div>
+
+                        <h1>
+                            مركز القيادة
+                            <span>الذكي</span>
+                        </h1>
+
+                        <p>
+                            بوابة موحدة للوصول إلى أنظمة الذكاء
+                            الاصطناعي، الوكلاء المستقلين وساحات
+                            النقاش والنماذج الذكية، ضمن تجربة
+                            مؤسسية واحدة.
+                        </p>
+
                     </div>
 
-                    <h1>
-                        مركز القيادة
-                        <span>الذكي</span>
-                    </h1>
 
-                    <p>
-                        منصة موحدة للوصول إلى أنظمة الذكاء الاصطناعي
-                        وساحة النقاش متعددة العقول، داخل واجهة
-                        مؤسسية واحدة عالية الأداء.
-                    </p>
-
-                </div>
+                    <div class="apps-grid">
 
 
-                <div class="cards">
+                        <!-- =================================
+                             AGENT
+                        ================================== -->
 
-                    <!-- AGENT -->
+                        <article class="app-card">
 
-                    <article class="card">
+                            <div class="app-card-icon">
+                                🤖
+                            </div>
 
-                        <div class="card-icon">
-                            🤖
-                        </div>
+                            <h3>
+                                الوكيل الذكي الخارق
+                            </h3>
 
-                        <h3>
-                            الوكيل الذكي الخارق
-                        </h3>
+                            <div class="subtitle">
+                                SUPER AI AGENT
+                            </div>
 
-                        <p>
-                            AI Studio — وكيل متقدم مع أدوات
-                            Backend وذاكرة وإعدادات نماذج.
-                        </p>
+                            <p>
+                                تشغيل الوكيل الذكي المتقدم
+                                وإدارة أدواته داخل بيئة مستقلة.
+                            </p>
 
-                        <button
-                            class="launch"
-                            data-launch="agent"
-                        >
-                            فتح الوكيل →
-                        </button>
+                            <button
+                                class="open-app"
+                                data-open="agent"
+                            >
+                                تشغيل الوكيل →
+                            </button>
 
-                    </article>
-
-
-                    <!-- DEBATE -->
-
-                    <article class="card">
-
-                        <div class="card-icon">
-                            ⚡
-                        </div>
-
-                        <h3>
-                            ساحة النقاش العباقرة
-                        </h3>
-
-                        <p>
-                            جلسات نقاش متعددة الشخصيات مع
-                            جولات وتحليل وأدوات بيانات.
-                        </p>
-
-                        <button
-                            class="launch"
-                            data-launch="debate"
-                        >
-                            دخول الساحة →
-                        </button>
-
-                    </article>
+                        </article>
 
 
-                    <!-- SYSTEM -->
+                        <!-- =================================
+                             DEBATE
+                        ================================== -->
 
-                    <article class="card">
+                        <article class="app-card purple">
 
-                        <div class="card-icon">
-                            ◈
-                        </div>
+                            <div class="app-card-icon">
+                                ⚡
+                            </div>
 
-                        <h3>
-                            Neural App Shell
-                        </h3>
+                            <h3>
+                                ساحة النقاش العباقرة
+                            </h3>
 
-                        <p>
-                            Micro-Frontend Architecture لعزل
-                            الخدمات وتشغيلها دون إعادة تحميل
-                            لوحة التحكم.
-                        </p>
+                            <div class="subtitle">
+                                INTELLIGENT DEBATE
+                            </div>
 
-                        <button
-                            class="launch"
-                            onclick="showArchitecture()"
-                        >
-                            عرض البنية →
-                        </button>
+                            <p>
+                                مساحة نقاش متعددة العقول للتحليل
+                                والمقارنة وتوليد الأفكار.
+                            </p>
 
-                    </article>
+                            <button
+                                class="open-app"
+                                data-open="debate"
+                            >
+                                دخول الساحة →
+                            </button>
+
+                        </article>
+
+
+                        <!-- =================================
+                             DUCK AI
+                        ================================== -->
+
+                        <article class="app-card pink">
+
+                            <div class="app-card-icon">
+                                ◈
+                            </div>
+
+                            <h3>
+                                النماذج الخارقة
+                            </h3>
+
+                            <div class="subtitle">
+                                GPT 5.6 LUNA
+                            </div>
+
+                            <p>
+                                بوابة النماذج الذكية الخارجية
+                                والوصول إلى Duck.ai.
+                            </p>
+
+                            <button
+                                class="open-app"
+                                data-open="models"
+                            >
+                                فتح النماذج →
+                            </button>
+
+                        </article>
+
+
+                    </div>
 
                 </div>
 
@@ -1124,7 +1618,7 @@ body::after{
 
 
             <!-- =================================================
-                 APP: AGENT
+                 AGENT MICRO FRONTEND
             ================================================== -->
 
             <section
@@ -1137,17 +1631,57 @@ body::after{
                     id="agentLoader"
                 >
 
-                    <div class="loader-content">
+                    <div class="loader-box">
 
                         <div class="loader-ring"></div>
 
-                        <div class="loader-text">
-                            جاري تشغيل الوكيل الذكي...
-                        </div>
+                        <strong>
+                            جاري تشغيل الوكيل الخارق
+                        </strong>
+
+                        <span>
+                            Loading AI Micro-Frontend...
+                        </span>
 
                     </div>
 
                 </div>
+
+
+                <div
+                    class="frame-fallback"
+                    id="agentFallback"
+                >
+
+                    <div class="fallback-box">
+
+                        <div class="fallback-icon">
+                            🤖
+                        </div>
+
+                        <h3>
+                            تعذر تضمين التطبيق
+                        </h3>
+
+                        <p>
+                            يبدو أن إعدادات الأمان الخاصة
+                            بالتطبيق تمنع تشغيله داخل iframe.
+                            يمكنك فتحه مباشرة.
+                        </p>
+
+                        <a
+                            class="external-btn"
+                            href="https://bahi-cloud.github.io/pro-max-problem/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            فتح الوكيل مباشرة ↗
+                        </a>
+
+                    </div>
+
+                </div>
+
 
                 <iframe
                     id="agentFrame"
@@ -1155,7 +1689,14 @@ body::after{
                     title="الوكيل الذكي الخارق"
                     loading="lazy"
                     referrerpolicy="strict-origin-when-cross-origin"
-                    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-scripts allow-same-origin"
+                    sandbox="
+                        allow-forms
+                        allow-modals
+                        allow-popups
+                        allow-presentation
+                        allow-scripts
+                        allow-same-origin
+                    "
                     src="about:blank"
                 ></iframe>
 
@@ -1163,7 +1704,7 @@ body::after{
 
 
             <!-- =================================================
-                 APP: DEBATE
+                 DEBATE MICRO FRONTEND
             ================================================== -->
 
             <section
@@ -1176,17 +1717,56 @@ body::after{
                     id="debateLoader"
                 >
 
-                    <div class="loader-content">
+                    <div class="loader-box">
 
                         <div class="loader-ring"></div>
 
-                        <div class="loader-text">
-                            جاري فتح ساحة النقاش...
-                        </div>
+                        <strong>
+                            جاري فتح ساحة النقاش
+                        </strong>
+
+                        <span>
+                            Loading Debate Micro-Frontend...
+                        </span>
 
                     </div>
 
                 </div>
+
+
+                <div
+                    class="frame-fallback"
+                    id="debateFallback"
+                >
+
+                    <div class="fallback-box">
+
+                        <div class="fallback-icon">
+                            ⚡
+                        </div>
+
+                        <h3>
+                            تعذر تضمين التطبيق
+                        </h3>
+
+                        <p>
+                            يمكنك فتح ساحة النقاش مباشرة
+                            في نافذة مستقلة.
+                        </p>
+
+                        <a
+                            class="external-btn"
+                            href="https://bahi-cloud.github.io/ni9ach-pro-max/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            فتح الساحة مباشرة ↗
+                        </a>
+
+                    </div>
+
+                </div>
+
 
                 <iframe
                     id="debateFrame"
@@ -1194,7 +1774,100 @@ body::after{
                     title="ساحة النقاش العباقرة"
                     loading="lazy"
                     referrerpolicy="strict-origin-when-cross-origin"
-                    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-scripts allow-same-origin"
+                    sandbox="
+                        allow-forms
+                        allow-modals
+                        allow-popups
+                        allow-presentation
+                        allow-scripts
+                        allow-same-origin
+                    "
+                    src="about:blank"
+                ></iframe>
+
+            </section>
+
+
+            <!-- =================================================
+                 DUCK AI
+            ================================================== -->
+
+            <section
+                class="app-view"
+                id="modelsView"
+            >
+
+                <div
+                    class="app-loader"
+                    id="modelsLoader"
+                >
+
+                    <div class="loader-box">
+
+                        <div class="loader-ring"></div>
+
+                        <strong>
+                            جاري فتح النماذج الخارقة
+                        </strong>
+
+                        <span>
+                            GPT 5.6 Luna · Duck.ai
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="frame-fallback"
+                    id="modelsFallback"
+                >
+
+                    <div class="fallback-box">
+
+                        <div class="fallback-icon">
+                            ◈
+                        </div>
+
+                        <h3>
+                            Duck.ai
+                        </h3>
+
+                        <p>
+                            قد يمنع Duck.ai التضمين داخل iframe
+                            لأسباب أمنية. استخدم الزر أدناه
+                            لفتح الخدمة مباشرة.
+                        </p>
+
+                        <a
+                            class="external-btn"
+                            href="https://duck.ai/"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            فتح النماذج مباشرة ↗
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <iframe
+                    id="modelsFrame"
+                    class="app-frame"
+                    title="النماذج الخارقة"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    sandbox="
+                        allow-forms
+                        allow-modals
+                        allow-popups
+                        allow-presentation
+                        allow-scripts
+                        allow-same-origin
+                    "
                     src="about:blank"
                 ></iframe>
 
@@ -1210,7 +1883,7 @@ body::after{
 <script>
 
 /* =========================================================
-   MICRO-FRONTEND CONFIGURATION
+   MICRO-FRONTEND REGISTRY
 ========================================================= */
 
 const APPS = {
@@ -1219,43 +1892,70 @@ const APPS = {
         title: "الوكيل الخارق",
 
         url:
-        "https://bahi-cloud.github.io/pro-max-problem/",
+            "https://bahi-cloud.github.io/pro-max-problem/",
 
         frame:
-        document.getElementById("agentFrame"),
+            document.getElementById("agentFrame"),
 
         loader:
-        document.getElementById("agentLoader")
+            document.getElementById("agentLoader"),
+
+        fallback:
+            document.getElementById("agentFallback")
     },
+
 
     debate: {
         title: "ساحة النقاش",
 
         url:
-        "https://bahi-cloud.github.io/ni9ach-pro-max/",
+            "https://bahi-cloud.github.io/ni9ach-pro-max/",
 
         frame:
-        document.getElementById("debateFrame"),
+            document.getElementById("debateFrame"),
 
         loader:
-        document.getElementById("debateLoader")
+            document.getElementById("debateLoader"),
+
+        fallback:
+            document.getElementById("debateFallback")
+    },
+
+
+    models: {
+        title: "النماذج الخارقة",
+
+        url:
+            "https://duck.ai/",
+
+        frame:
+            document.getElementById("modelsFrame"),
+
+        loader:
+            document.getElementById("modelsLoader"),
+
+        fallback:
+            document.getElementById("modelsFallback")
     }
 
 };
 
 
 /* =========================================================
-   ELEMENTS
+   DOM
 ========================================================= */
 
 const sidebar =
     document.getElementById("sidebar");
 
-const collapseBtn =
-    document.getElementById("collapseBtn");
+const backdrop =
+    document.getElementById("sidebarBackdrop");
 
-const mobileMenu =
-    document.getElementById("mobileMenu");
+const menuButton =
+    document.getElementById("menuButton");
+
+const closeSidebar =
+    document.getElementById("closeSidebar");
 
 const pageTitle =
     document.getElementById("pageTitle");
@@ -1263,51 +1963,209 @@ const pageTitle =
 const home =
     document.getElementById("home");
 
-const fullscreenBtn =
-    document.getElementById("fullscreenBtn");
+const fullscreenButton =
+    document.getElementById("fullscreenButton");
 
 
 /* =========================================================
-   APP STATE
+   STATE
 ========================================================= */
 
-let activeApp = "home";
+let currentPage = "home";
 
 const loadedApps = {};
 
 
 /* =========================================================
-   LOAD MICRO FRONTEND
+   SIDEBAR
 ========================================================= */
 
-function loadApp(appName){
+function openSidebar(){
 
-    const app = APPS[appName];
+    sidebar.classList.add("open");
+
+    backdrop.classList.add("active");
+
+    menuButton.setAttribute(
+        "aria-expanded",
+        "true"
+    );
+
+}
+
+
+function closeMenu(){
+
+    sidebar.classList.remove("open");
+
+    backdrop.classList.remove("active");
+
+    menuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+}
+
+
+/* =========================================================
+   IMPORTANT FIX
+   CLICK ANYWHERE OUTSIDE SIDEBAR = CLOSE
+========================================================= */
+
+document.addEventListener(
+    "pointerdown",
+    event => {
+
+        if(
+            sidebar.classList.contains("open") &&
+            !sidebar.contains(event.target) &&
+            !menuButton.contains(event.target)
+        ){
+
+            closeMenu();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MENU BUTTON
+========================================================= */
+
+menuButton.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        if(
+            sidebar.classList.contains("open")
+        ){
+
+            closeMenu();
+
+        }else{
+
+            openSidebar();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+closeSidebar.addEventListener(
+    "click",
+    closeMenu
+);
+
+
+/* =========================================================
+   BACKDROP
+========================================================= */
+
+backdrop.addEventListener(
+    "click",
+    closeMenu
+);
+
+
+/* =========================================================
+   LOAD APP
+========================================================= */
+
+function loadApp(name){
+
+    const app = APPS[name];
 
     if(!app) return;
 
-    if(!loadedApps[appName]){
 
-        app.loader.style.display = "grid";
+    if(loadedApps[name]){
 
-        app.frame.src = app.url;
+        return;
 
-        app.frame.addEventListener(
-            "load",
-            () => {
-
-                app.loader.style.opacity = "0";
-
-                setTimeout(() => {
-                    app.loader.style.display = "none";
-                }, 300);
-
-            },
-            { once:true }
-        );
-
-        loadedApps[appName] = true;
     }
+
+
+    app.loader.style.display =
+        "grid";
+
+    app.loader.style.opacity =
+        "1";
+
+
+    app.frame.src =
+        app.url;
+
+
+    app.frame.addEventListener(
+        "load",
+        () => {
+
+            app.loader.style.opacity =
+                "0";
+
+            setTimeout(
+                () => {
+
+                    app.loader.style.display =
+                        "none";
+
+                },
+                300
+            );
+
+        },
+        { once:true }
+    );
+
+
+    /*
+       بعض المواقع قد تمنع iframe.
+       ننتظر عدة ثوانٍ ثم نظهر fallback
+       فقط إذا لم يحدث تحميل.
+    */
+
+    setTimeout(
+        () => {
+
+            if(
+                app.loader.style.display !== "none"
+            ){
+
+                app.loader.style.display =
+                    "none";
+
+                /*
+                   لا نعرض fallback مباشرة
+                   إلا إذا كان iframe لم يستجب.
+                */
+
+                if(
+                    !app.frame.contentDocument
+                ){
+
+                    app.fallback.style.display =
+                        "grid";
+
+                }
+
+            }
+
+        },
+        9000
+    );
+
+
+    loadedApps[name] = true;
 
 }
 
@@ -1316,35 +2174,56 @@ function loadApp(appName){
    NAVIGATION
 ========================================================= */
 
-function openPage(page){
+function navigate(page){
 
-    activeApp = page;
+    currentPage = page;
 
-    /* reset navigation */
+
+    /*
+       FIRST:
+       CLOSE SIDEBAR ALWAYS
+    */
+
+    closeMenu();
+
+
+    /*
+       UPDATE NAV
+    */
 
     document
         .querySelectorAll(".nav-item")
-        .forEach(btn => {
+        .forEach(item => {
 
-            btn.classList.toggle(
+            item.classList.toggle(
                 "active",
-                btn.dataset.page === page
+                item.dataset.page === page
             );
 
         });
 
 
-    /* HOME */
+    /*
+       HOME
+    */
 
     if(page === "home"){
 
-        home.classList.remove("hidden");
+        home.classList.remove(
+            "hidden"
+        );
+
 
         document
             .querySelectorAll(".app-view")
-            .forEach(view =>
-                view.classList.remove("active")
-            );
+            .forEach(view => {
+
+                view.classList.remove(
+                    "active"
+                );
+
+            });
+
 
         pageTitle.textContent =
             "مركز القيادة";
@@ -1353,53 +2232,67 @@ function openPage(page){
     }
 
 
-    /* APPLICATION */
+    /*
+       APP
+    */
 
-    home.classList.add("hidden");
+    home.classList.add(
+        "hidden"
+    );
+
 
     document
         .querySelectorAll(".app-view")
-        .forEach(view =>
-            view.classList.remove("active")
-        );
+        .forEach(view => {
 
-    const target =
+            view.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const view =
         document.getElementById(
             page + "View"
         );
 
-    if(target){
-        target.classList.add("active");
+
+    if(view){
+
+        view.classList.add(
+            "active"
+        );
+
     }
 
 
     pageTitle.textContent =
-        APPS[page]?.title || page;
+        APPS[page]?.title ||
+        "التطبيق";
 
 
     loadApp(page);
 
-
-    /* mobile */
-
-    sidebar.classList.remove("mobile-open");
 }
 
 
 /* =========================================================
-   NAV BUTTONS
+   NAV ITEMS
 ========================================================= */
 
 document
     .querySelectorAll(".nav-item")
-    .forEach(btn => {
+    .forEach(item => {
 
-        btn.addEventListener(
+        item.addEventListener(
             "click",
-            () => {
+            event => {
 
-                openPage(
-                    btn.dataset.page
+                event.stopPropagation();
+
+                navigate(
+                    item.dataset.page
                 );
 
             }
@@ -1409,19 +2302,19 @@ document
 
 
 /* =========================================================
-   LAUNCH BUTTONS
+   HOME APP BUTTONS
 ========================================================= */
 
 document
-    .querySelectorAll("[data-launch]")
-    .forEach(btn => {
+    .querySelectorAll("[data-open]")
+    .forEach(button => {
 
-        btn.addEventListener(
+        button.addEventListener(
             "click",
             () => {
 
-                openPage(
-                    btn.dataset.launch
+                navigate(
+                    button.dataset.open
                 );
 
             }
@@ -1431,37 +2324,79 @@ document
 
 
 /* =========================================================
-   COLLAPSE SIDEBAR
+   ESC = CLOSE SIDEBAR
 ========================================================= */
 
-collapseBtn.addEventListener(
-    "click",
-    () => {
+document.addEventListener(
+    "keydown",
+    event => {
 
-        sidebar.classList.toggle(
-            "collapsed"
-        );
+        if(event.key === "Escape"){
 
-        collapseBtn.textContent =
-            sidebar.classList.contains("collapsed")
-            ? "→"
-            : "⇠";
+            closeMenu();
+
+        }
 
     }
 );
 
 
 /* =========================================================
-   MOBILE MENU
+   KEYBOARD SHORTCUTS
 ========================================================= */
 
-mobileMenu.addEventListener(
-    "click",
-    () => {
+document.addEventListener(
+    "keydown",
+    event => {
 
-        sidebar.classList.toggle(
-            "mobile-open"
-        );
+        if(
+            !event.ctrlKey &&
+            !event.metaKey
+        ){
+
+            return;
+
+        }
+
+
+        const key =
+            event.key;
+
+
+        if(key === "1"){
+
+            event.preventDefault();
+
+            navigate("home");
+
+        }
+
+
+        if(key === "2"){
+
+            event.preventDefault();
+
+            navigate("agent");
+
+        }
+
+
+        if(key === "3"){
+
+            event.preventDefault();
+
+            navigate("debate");
+
+        }
+
+
+        if(key === "4"){
+
+            event.preventDefault();
+
+            navigate("models");
+
+        }
 
     }
 );
@@ -1471,20 +2406,24 @@ mobileMenu.addEventListener(
    FULLSCREEN
 ========================================================= */
 
-fullscreenBtn.addEventListener(
+fullscreenButton.addEventListener(
     "click",
     async () => {
 
         try{
 
-            if(!document.fullscreenElement){
+            if(
+                !document.fullscreenElement
+            ){
 
-                await document.documentElement
+                await document
+                    .documentElement
                     .requestFullscreen();
 
             }else{
 
-                await document.exitFullscreen();
+                await document
+                    .exitFullscreen();
 
             }
 
@@ -1502,88 +2441,24 @@ fullscreenBtn.addEventListener(
 
 
 /* =========================================================
-   ARCHITECTURE INFO
+   INITIAL STATE
 ========================================================= */
 
-function showArchitecture(){
-
-    alert(
-`BAHI CLOUD — APP SHELL
-
-Architecture:
-
-Dashboard Shell
-       │
-       ├── AI Agent Micro-Frontend
-       │
-       └── Debate Arena Micro-Frontend
-
-✓ Shared navigation
-✓ Independent applications
-✓ Lazy loading
-✓ Isolated execution
-✓ No full dashboard reload
-✓ Collapsible navigation
-✓ Glassmorphism UI
-✓ Neon ambient effects`
-    );
-
-}
+navigate("home");
 
 
 /* =========================================================
-   KEYBOARD SHORTCUTS
+   OPTIONAL:
+   OPEN SIDEBAR ON FIRST VISIT
 ========================================================= */
 
-document.addEventListener(
-    "keydown",
-    event => {
-
-        /* CTRL + 1 */
-
-        if(event.ctrlKey && event.key === "1"){
-
-            event.preventDefault();
-
-            openPage("home");
-
-        }
-
-        /* CTRL + 2 */
-
-        if(event.ctrlKey && event.key === "2"){
-
-            event.preventDefault();
-
-            openPage("agent");
-
-        }
-
-        /* CTRL + 3 */
-
-        if(event.ctrlKey && event.key === "3"){
-
-            event.preventDefault();
-
-            openPage("debate");
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   INITIALIZATION
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
+setTimeout(
     () => {
 
-        openPage("home");
+        openSidebar();
 
-    }
+    },
+    450
 );
 
 </script>
