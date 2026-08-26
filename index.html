@@ -1,3644 +1,825 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
-
-<title>
-    BAHI CLOUD — Neural Command Center
-</title>
-
-<meta
-    name="theme-color"
-    content="#02050b"
->
-
-<style>
-
-/* =========================================================
-   BAHI CLOUD
-   ENTERPRISE NEURAL COMMAND CENTER
-   2026
-========================================================= */
-
-@import url(
-'https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700&display=swap'
-);
-
-
-/* =========================================================
-   VARIABLES
-========================================================= */
-
-:root{
-
-    --bg:#02050b;
-    --bg-2:#050a12;
-    --bg-3:#08101c;
-
-    --glass:rgba(8,14,25,.78);
-    --glass-strong:rgba(7,12,22,.92);
-
-    --line:rgba(255,255,255,.075);
-    --line-hover:rgba(0,245,255,.22);
-
-    --text:#f4f8ff;
-    --muted:#7c8ba2;
-    --muted-2:#4d5a6e;
-
-    --cyan:#00f5ff;
-    --blue:#3b82ff;
-    --violet:#8b5cf6;
-    --green:#00ff9d;
-    --pink:#ff2bd6;
-    --orange:#ff9f43;
-
-    --sidebar-width:285px;
-    --topbar-height:62px;
-
-    --ease:cubic-bezier(.2,.8,.2,1);
-
-    --transition:.35s var(--ease);
-
-    --shadow:
-        0 25px 90px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.035);
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-*{
-    box-sizing:border-box;
-}
-
-html,
-body{
-    width:100%;
-    height:100%;
-    margin:0;
-}
-
-body{
-
-    overflow:hidden;
-
-    color:var(--text);
-
-    font-family:"Cairo",sans-serif;
-
-    background:
-
-        radial-gradient(
-            circle at 8% 12%,
-            rgba(0,245,255,.08),
-            transparent 28%
-        ),
-
-        radial-gradient(
-            circle at 92% 15%,
-            rgba(139,92,246,.10),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(0,255,157,.045),
-            transparent 35%
-        ),
-
-        linear-gradient(
-            135deg,
-            #02040a,
-            #070b14 50%,
-            #02040a
-        );
-}
-
-
-/* =========================================================
-   CYBER GRID
-========================================================= */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-    inset:0;
-
-    z-index:-5;
-
-    pointer-events:none;
-
-    background:
-
-        linear-gradient(
-            rgba(255,255,255,.012) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.012) 1px,
-            transparent 1px
-        );
-
-    background-size:48px 48px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent
-        );
-}
-
-
-/* =========================================================
-   APP
-========================================================= */
-
-.app{
-
-    width:100%;
-    height:100vh;
-
-    position:relative;
-
-    overflow:hidden;
-}
-
-
-/* =========================================================
-   TOP BAR
-========================================================= */
-
-.topbar{
-
-    position:fixed;
-
-    top:10px;
-    left:10px;
-    right:10px;
-
-    height:var(--topbar-height);
-
-    z-index:800;
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    padding:
-        0 14px;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(10,17,29,.86),
-            rgba(5,9,17,.78)
-        );
-
-    backdrop-filter:
-        blur(28px)
-        saturate(140%);
-
-    -webkit-backdrop-filter:
-        blur(28px)
-        saturate(140%);
-
-    box-shadow:var(--shadow);
-
-    transition:
-
-        transform .45s var(--ease),
-        opacity .3s ease,
-        filter .3s ease;
-}
-
-
-/*
-    TOPBAR HIDDEN
-*/
-
-.app.chrome-hidden .topbar{
-
-    transform:
-        translateY(
-            calc(-100% - 25px)
-        );
-
-    opacity:0;
-
-    pointer-events:none;
-
-    filter:blur(4px);
-}
-
-
-/* =========================================================
-   MENU BUTTON
-========================================================= */
-
-.menu-button{
-
-    width:38px;
-    height:38px;
-
-    flex:none;
-
-    display:grid;
-    place-items:center;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:11px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    color:#94a1b5;
-
-    cursor:pointer;
-
-    transition:.25s;
-}
-
-.menu-button:hover{
-
-    color:white;
-
-    border-color:
-        var(--line-hover);
-
-    background:
-        rgba(0,245,255,.05);
-
-    box-shadow:
-        0 0 25px rgba(0,245,255,.08);
-}
-
-
-/* =========================================================
-   PAGE TITLE
-========================================================= */
-
-.page-title{
-
-    display:flex;
-    flex-direction:column;
-
-    min-width:0;
-
-    line-height:1.15;
-}
-
-.page-title strong{
-
-    font-size:12px;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-}
-
-.page-title span{
-
-    margin-top:4px;
-
-    color:var(--muted-2);
-
-    font-family:"Orbitron",sans-serif;
-
-    font-size:7px;
-
-    letter-spacing:1px;
-}
-
-
-/* =========================================================
-   TOP SPACE
-========================================================= */
-
-.top-space{
-    flex:1;
-}
-
-
-/* =========================================================
-   SYSTEM PILL
-========================================================= */
-
-.system-pill{
-
-    display:flex;
-    align-items:center;
-
-    gap:7px;
-
-    padding:
-        6px 10px;
-
-    border:
-        1px solid rgba(0,255,157,.11);
-
-    border-radius:20px;
-
-    background:
-        rgba(0,255,157,.025);
-
-    color:#729182;
-
-    font-size:8px;
-}
-
-.system-pill i{
-
-    width:5px;
-    height:5px;
-
-    border-radius:50%;
-
-    background:
-        var(--green);
-
-    box-shadow:
-        0 0 12px var(--green);
-}
-
-
-/* =========================================================
-   TOP ICON
-========================================================= */
-
-.top-button{
-
-    width:34px;
-    height:34px;
-
-    display:grid;
-    place-items:center;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:9px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    color:#8190a5;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.top-button:hover{
-
-    color:white;
-
-    border-color:
-        var(--line-hover);
-}
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-.sidebar{
-
-    position:fixed;
-
-    top:82px;
-    right:12px;
-    bottom:12px;
-
-    width:var(--sidebar-width);
-
-    z-index:1000;
-
-    display:flex;
-    flex-direction:column;
-
-    padding:14px;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:22px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            rgba(10,17,30,.95),
-            rgba(4,8,15,.96)
-        );
-
-    backdrop-filter:
-        blur(32px)
-        saturate(145%);
-
-    -webkit-backdrop-filter:
-        blur(32px)
-        saturate(145%);
-
-    box-shadow:
-        0 35px 110px rgba(0,0,0,.62),
-        0 0 60px rgba(0,245,255,.035);
-
-    transform:
-        translateX(
-            calc(100% + 35px)
-        );
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transition:
-
-        transform .45s var(--ease),
-        opacity .3s ease,
-        visibility .45s;
-}
-
-.sidebar.open{
-
-    transform:
-        translateX(0);
-
-    opacity:1;
-
-    visibility:visible;
-}
-
-
-/* =========================================================
-   SIDEBAR HIDDEN WHEN CHROME MODE
-========================================================= */
-
-.app.chrome-hidden .sidebar{
-
-    transform:
-        translateX(
-            calc(100% + 35px)
-        );
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-}
-
-
-/* =========================================================
-   SIDEBAR GLOW
-========================================================= */
-
-.sidebar::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:170px;
-    height:170px;
-
-    top:-80px;
-    right:-50px;
-
-    border-radius:50%;
-
-    background:
-        var(--cyan);
-
-    filter:blur(90px);
-
-    opacity:.07;
-
-    pointer-events:none;
-}
-
-
-/* =========================================================
-   BRAND
-========================================================= */
-
-.brand{
-
-    position:relative;
-
-    display:flex;
-    align-items:center;
-
-    gap:11px;
-
-    padding:
-        0 5px 13px;
-
-    border-bottom:
-        1px solid var(--line);
-}
-
-.brand-icon{
-
-    width:38px;
-    height:38px;
-
-    display:grid;
-    place-items:center;
-
-    flex:none;
-
-    border:
-        1px solid var(--line-hover);
-
-    border-radius:12px;
-
-    color:
-        var(--cyan);
-
-    background:
-
-        linear-gradient(
-            135deg,
-            rgba(0,245,255,.15),
-            rgba(139,92,246,.15)
-        );
-
-    box-shadow:
-        0 0 30px rgba(0,245,255,.10);
-
-    font-size:18px;
-}
-
-.brand-name{
-
-    font-family:"Orbitron",sans-serif;
-
-    font-size:13px;
-    font-weight:700;
-
-    letter-spacing:1.4px;
-}
-
-.brand-name span{
-
-    color:var(--cyan);
-}
-
-
-/* =========================================================
-   CLOSE SIDEBAR
-========================================================= */
-
-.close-sidebar{
-
-    position:absolute;
-
-    left:9px;
-    top:9px;
-
-    width:29px;
-    height:29px;
-
-    display:grid;
-    place-items:center;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:8px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    color:#728097;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.close-sidebar:hover{
-
-    color:white;
-
-    border-color:
-        var(--line-hover);
-}
-
-
-/* =========================================================
-   SYSTEM STATUS
-========================================================= */
-
-.system-status{
-
-    display:flex;
-    align-items:center;
-
-    gap:8px;
-
-    margin:
-        13px 0;
-
-    padding:
-        9px 11px;
-
-    border:
-        1px solid rgba(0,255,157,.10);
-
-    border-radius:11px;
-
-    background:
-        rgba(0,255,157,.025);
-
-    color:#718e7f;
-
-    font-size:9px;
-}
-
-.status-dot{
-
-    width:6px;
-    height:6px;
-
-    flex:none;
-
-    border-radius:50%;
-
-    background:
-        var(--green);
-
-    box-shadow:
-        0 0 12px var(--green);
-}
-
-
-/* =========================================================
-   NAV
-========================================================= */
-
-.nav-title{
-
-    padding:
-        3px 8px 8px;
-
-    color:#536078;
-
-    font-family:"Orbitron",sans-serif;
-
-    font-size:8px;
-
-    letter-spacing:1.4px;
-}
-
-.nav{
-
-    display:flex;
-    flex-direction:column;
-
-    gap:5px;
-}
-
-.nav-item{
-
-    position:relative;
-
-    width:100%;
-    min-height:51px;
-
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-
-    padding:
-        0 12px;
-
-    border:
-        1px solid transparent;
-
-    border-radius:13px;
-
-    background:
-        transparent;
-
-    color:#8997aa;
-
-    text-align:right;
-
-    cursor:pointer;
-
-    transition:
-
-        background .25s,
-        border .25s,
-        color .25s,
-        transform .25s;
-}
-
-.nav-item:hover{
-
-    color:white;
-
-    background:
-        rgba(255,255,255,.035);
-
-    border-color:
-        var(--line);
-
-    transform:
-        translateX(-2px);
-}
-
-.nav-item.active{
-
-    color:white;
-
-    background:
-
-        linear-gradient(
-            100deg,
-            rgba(0,245,255,.12),
-            rgba(59,130,255,.045)
-        );
-
-    border-color:
-        rgba(0,245,255,.18);
-
-    box-shadow:
-        inset 0 0 25px rgba(0,245,255,.025);
-}
-
-.nav-item.active::before{
-
-    content:"";
-
-    position:absolute;
-
-    right:-1px;
-
-    top:9px;
-    bottom:9px;
-
-    width:2px;
-
-    border-radius:10px;
-
-    background:
-        var(--cyan);
-
-    box-shadow:
-        0 0 12px var(--cyan);
-}
-
-.nav-icon{
-
-    width:29px;
-    height:29px;
-
-    display:grid;
-    place-items:center;
-
-    flex:none;
-
-    border-radius:9px;
-
-    background:
-        rgba(255,255,255,.035);
-
-    font-size:15px;
-}
-
-.nav-content{
-
-    display:flex;
-    flex-direction:column;
-
-    min-width:0;
-}
-
-.nav-name{
-
-    font-size:11px;
-    font-weight:700;
-}
-
-.nav-desc{
-
-    margin-top:2px;
-
-    color:#56647a;
-
-    font-size:8px;
-
-    white-space:nowrap;
-}
-
-.nav-item.active .nav-desc{
-
-    color:#71889c;
-}
-
-
-/* =========================================================
-   SIDEBAR FOOTER
-========================================================= */
-
-.sidebar-footer{
-
-    margin-top:auto;
-
-    padding-top:12px;
-
-    border-top:
-        1px solid var(--line);
-
-    text-align:center;
-}
-
-.version{
-
-    color:#4d5a6e;
-
-    font-family:"Orbitron",sans-serif;
-
-    font-size:7px;
-
-    letter-spacing:1px;
-}
-
-
-/* =========================================================
-   EDGE HINTS
-========================================================= */
-
-/*
-   هذه المناطق تجعل الواجهة قابلة للإظهار
-   بدون الحاجة إلى زر دائم.
-*/
-
-.edge-top{
-
-    position:fixed;
-
-    top:0;
-    left:0;
-    right:0;
-
-    height:10px;
-
-    z-index:750;
-
-    pointer-events:none;
-}
-
-.edge-right{
-
-    position:fixed;
-
-    top:0;
-    right:0;
-    bottom:0;
-
-    width:10px;
-
-    z-index:750;
-
-    pointer-events:none;
-}
-
-
-/* =========================================================
-   REVEAL ON EDGE HOVER
-========================================================= */
-
-.edge-top:hover ~ .topbar,
-.topbar:hover{
-
-    transform:
-        translateY(0);
-
-    opacity:1;
-
-    pointer-events:auto;
-
-    filter:none;
-}
-
-.edge-right:hover ~ .sidebar{
-
-    transform:
-        translateX(0);
-
-    opacity:1;
-
-    visibility:visible;
-
-    pointer-events:auto;
-}
-
-
-/* =========================================================
-   BACKDROP
-========================================================= */
-
-.sidebar-backdrop{
-
-    position:fixed;
-    inset:0;
-
-    z-index:900;
-
-    background:
-        rgba(0,0,0,.38);
-
-    backdrop-filter:
-        blur(3px);
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transition:
-        opacity .3s,
-        visibility .3s;
-}
-
-.sidebar-backdrop.active{
-
-    opacity:1;
-
-    visibility:visible;
-}
-
-
-/* =========================================================
-   WORKSPACE
-========================================================= */
-
-.workspace{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    overflow:hidden;
-
-    transition:
-        filter .35s ease;
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-.home{
-
-    position:absolute;
-
-    inset:0;
-
-    overflow-y:auto;
-    overflow-x:hidden;
-
-    padding:
-        calc(
-            var(--topbar-height) + 45px
-        )
-        25px
-        80px;
-
-    transition:
-
-        opacity .3s ease,
-        transform .4s var(--ease);
-}
-
-.home.hidden{
-
-    opacity:0;
-
-    pointer-events:none;
-
-    transform:
-        scale(.985);
-}
-
-
-/* =========================================================
-   HOME SCROLLBAR
-========================================================= */
-
-.home::-webkit-scrollbar{
-
-    width:6px;
-}
-
-.home::-webkit-scrollbar-track{
-
-    background:transparent;
-}
-
-.home::-webkit-scrollbar-thumb{
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0,245,255,.35),
-            rgba(139,92,246,.35)
-        );
-}
-
-.home{
-
-    scrollbar-width:thin;
-
-    scrollbar-color:
-        rgba(0,245,255,.3)
-        transparent;
-}
-
-
-/* =========================================================
-   HOME INNER
-========================================================= */
-
-.home-inner{
-
-    width:100%;
-    max-width:1200px;
-
-    margin:auto;
-
-    padding-bottom:50px;
-}
-
-
-/* =========================================================
-   HERO
-========================================================= */
-
-.hero{
-
-    padding:
-        25px 0 28px;
-}
-
-.eyebrow{
-
-    color:
-        var(--cyan);
-
-    font-family:"Orbitron",sans-serif;
-
-    font-size:8px;
-
-    letter-spacing:2px;
-}
-
-.hero h1{
-
-    margin:
-        9px 0 0;
-
-    font-size:
-        clamp(
-            29px,
-            4vw,
-            52px
-        );
-
-    line-height:1.2;
-
-    letter-spacing:-1.7px;
-}
-
-.hero h1 span{
-
-    background:
-
-        linear-gradient(
-            90deg,
-            var(--cyan),
-            #a3b7ff,
-            var(--violet)
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-
-    color:transparent;
-}
-
-.hero p{
-
-    max-width:720px;
-
-    margin:
-        13px 0 0;
-
-    color:
-        var(--muted);
-
-    font-size:11px;
-
-    line-height:2;
-}
-
-
-/* =========================================================
-   KPI ROW
-========================================================= */
-
-.kpi-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(
-            4,
-            minmax(0,1fr)
-        );
-
-    gap:10px;
-
-    margin-bottom:14px;
-}
-
-.kpi{
-
-    position:relative;
-
-    min-height:90px;
-
-    padding:15px;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:15px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    backdrop-filter:
-        blur(18px);
-
-    box-shadow:
-        var(--shadow);
-
-    overflow:hidden;
-}
-
-.kpi::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:80px;
-    height:80px;
-
-    left:-35px;
-    bottom:-40px;
-
-    border-radius:50%;
-
-    background:
-        var(--cyan);
-
-    filter:blur(50px);
-
-    opacity:.08;
-}
-
-.kpi:nth-child(2)::after{
-    background:var(--green);
-}
-
-.kpi:nth-child(3)::after{
-    background:var(--violet);
-}
-
-.kpi:nth-child(4)::after{
-    background:var(--pink);
-}
-
-.kpi-label{
-
-    color:
-        #65748a;
-
-    font-size:8px;
-}
-
-.kpi-value{
-
-    margin-top:5px;
-
-    font-family:"Orbitron",sans-serif;
-
-    font-size:18px;
-
-    font-weight:700;
-}
-
-.kpi-value span{
-
-    color:
-        var(--green);
-
-    font-size:8px;
-
-    margin-right:4px;
-}
-
-
-/* =========================================================
-   MAIN PANELS
-========================================================= */
-
-.dashboard-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        minmax(0,1.6fr)
-        minmax(260px,.8fr);
-
-    gap:13px;
-}
-
-
-/* =========================================================
-   PANEL
-========================================================= */
-
-.panel{
-
-    position:relative;
-
-    padding:18px;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:18px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.04),
-            rgba(255,255,255,.012)
-        );
-
-    backdrop-filter:
-        blur(22px);
-
-    box-shadow:
-        var(--shadow);
-}
-
-.panel-header{
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    margin-bottom:15px;
-}
-
-.panel-header h2{
-
-    margin:0;
-
-    font-size:12px;
-}
-
-.panel-header span{
-
-    margin-right:auto;
-
-    color:
-        #536078;
-
-    font-family:"Orbitron",sans-serif;
-
-    font-size:7px;
-
-    letter-spacing:1px;
-}
-
-
-/* =========================================================
-   APPLICATION CARDS
-========================================================= */
-
-.app-list{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(
-            2,
-            minmax(0,1fr)
-        );
-
-    gap:9px;
-}
-
-.app-card{
-
-    position:relative;
-
-    min-height:150px;
-
-    padding:17px;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:15px;
-
-    background:
-        rgba(255,255,255,.022);
-
-    overflow:hidden;
-
-    transition:
-
-        transform .25s var(--ease),
-        border .25s,
-        background .25s;
-}
-
-.app-card:hover{
-
-    transform:
-        translateY(-3px);
-
-    border-color:
-        var(--line-hover);
-
-    background:
-        rgba(255,255,255,.035);
-}
-
-.app-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:100px;
-    height:100px;
-
-    top:-55px;
-    left:-35px;
-
-    border-radius:50%;
-
-    background:
-        var(--cyan);
-
-    filter:blur(60px);
-
-    opacity:.07;
-}
-
-.app-card.purple::before{
-    background:var(--violet);
-}
-
-.app-card.pink::before{
-    background:var(--pink);
-}
-
-.app-card-icon{
-
-    width:38px;
-    height:38px;
-
-    display:grid;
-    place-items:center;
-
-    margin-bottom:11px;
-
-    border:
-        1px solid var(--line);
-
-    border-radius:11px;
-
-    background:
-        rgba(255,255,255,.035);
-
-    font-size:18px;
-}
-
-.app-card h3{
-
-    margin:0;
-
-    font-size:12px;
-}
-
-.subtitle{
-
-    margin-top:3px;
-
-    color:
-        var(--cyan);
-
-    font-family:"Orbitron",sans-serif;
-
-    font-size:7px;
-
-    letter-spacing:.5px;
-}
-
-.app-card p{
-
-    margin:
-        8px 0 12px;
-
-    color:
-        #66758a;
-
-    font-size:8px;
-
-    line-height:1.9;
-}
-
-.open-app{
-
-    padding:
-        7px 11px;
-
-    border:
-        1px solid rgba(0,245,255,.15);
-
-    border-radius:8px;
-
-    background:
-        rgba(0,245,255,.035);
-
-    color:
-        var(--cyan);
-
-    font-size:8px;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.open-app:hover{
-
-    background:
-        rgba(0,245,255,.08);
-
-    border-color:
-        rgba(0,245,255,.3);
-}
-
-
-/* =========================================================
-   ACTIVITY
-========================================================= */
-
-.activity{
-
-    display:flex;
-    flex-direction:column;
-
-    gap:10px;
-}
-
-.activity-item{
-
-    display:flex;
-
-    gap:10px;
-
-    padding-bottom:10px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.04);
-}
-
-.activity-icon{
-
-    width:27px;
-    height:27px;
-
-    display:grid;
-    place-items:center;
-
-    flex:none;
-
-    border-radius:8px;
-
-    background:
-        rgba(0,245,255,.05);
-
-    color:
-        var(--cyan);
-
-    font-size:12px;
-}
-
-.activity-text{
-
-    min-width:0;
-}
-
-.activity-text strong{
-
-    display:block;
-
-    font-size:9px;
-}
-
-.activity-text span{
-
-    display:block;
-
-    margin-top:2px;
-
-    color:
-        #56657a;
-
-    font-size:7px;
-}
-
-
-/* =========================================================
-   APP VIEW
-========================================================= */
-
-.app-view{
-
-    position:absolute;
-
-    inset:0;
-
-    display:flex;
-
-    overflow:hidden;
-
-    background:#02050b;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transform:
-        scale(.99);
-
-    transition:
-
-        opacity .3s ease,
-        transform .4s var(--ease),
-        visibility .3s;
-}
-
-.app-view.active{
-
-    opacity:1;
-
-    visibility:visible;
-
-    transform:
-        scale(1);
-}
-
-
-/* =========================================================
-   IFRAME
-========================================================= */
-
-.app-frame{
-
-    width:100%;
-    height:100%;
-
-    flex:1;
-
-    border:0;
-
-    background:#fff;
-}
-
-
-/* =========================================================
-   LOADER
-========================================================= */
-
-.app-loader{
-
-    position:absolute;
-
-    inset:0;
-
-    z-index:30;
-
-    display:grid;
-
-    place-items:center;
-
-    background:
-
-        radial-gradient(
-            circle,
-            rgba(0,245,255,.035),
-            rgba(2,5,11,.98)
-        );
-
-    transition:
-        opacity .3s;
-}
-
-.loader-box{
-
-    text-align:center;
-}
-
-.loader-ring{
-
-    width:45px;
-    height:45px;
-
-    margin:
-        0 auto 14px;
-
-    border:
-        2px solid
-        rgba(0,245,255,.08);
-
-    border-top-color:
-        var(--cyan);
-
-    border-radius:50%;
-
-    animation:
-        spin .8s linear infinite;
-}
-
-@keyframes spin{
-
-    to{
-        transform:rotate(360deg);
-    }
-
-}
-
-.loader-box strong{
-
-    display:block;
-
-    font-size:10px;
-}
-
-.loader-box span{
-
-    display:block;
-
-    margin-top:5px;
-
-    color:
-        #526178;
-
-    font-size:8px;
-}
-
-
-/* =========================================================
-   FLOATING REVEAL CONTROL
-========================================================= */
-
-.reveal-control{
-
-    position:fixed;
-
-    top:10px;
-    right:10px;
-
-    z-index:1100;
-
-    width:37px;
-    height:37px;
-
-    display:grid;
-    place-items:center;
-
-    border:
-        1px solid
-        rgba(0,245,255,.20);
-
-    border-radius:11px;
-
-    background:
-        rgba(5,12,22,.82);
-
-    backdrop-filter:
-        blur(18px);
-
-    color:
-        var(--cyan);
-
-    cursor:pointer;
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transform:
-        translateY(-10px)
-        scale(.9);
-
-    transition:
-
-        opacity .25s,
-        visibility .25s,
-        transform .3s var(--ease);
-}
-
-.app.chrome-hidden .reveal-control{
-
-    opacity:1;
-
-    visibility:visible;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:900px){
-
-    .kpi-grid{
-
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .dashboard-grid{
-
-        grid-template-columns:
-            1fr;
-    }
-
-}
-
-
-@media(max-width:650px){
-
-    :root{
-
-        --topbar-height:55px;
-
-    }
-
-    .topbar{
-
-        top:7px;
-        left:7px;
-        right:7px;
-
-        height:55px;
-
-        border-radius:15px;
-    }
-
-    .system-pill{
-
-        display:none;
-    }
-
-    .sidebar{
-
-        top:7px;
-        right:7px;
-        bottom:7px;
-
-        width:
-            min(
-                285px,
-                calc(100vw - 14px)
-            );
-
-        border-radius:19px;
-    }
-
-    .home{
-
-        padding:
-            82px
-            14px
-            100px;
-    }
-
-    .hero{
-
-        padding:
-            20px 0;
-    }
-
-    .hero h1{
-
-        font-size:29px;
-    }
-
-    .kpi-grid{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-        gap:8px;
-    }
-
-    .kpi{
-
-        min-height:80px;
-
-        padding:12px;
-    }
-
-    .kpi-value{
-
-        font-size:15px;
-    }
-
-    .app-list{
-
-        grid-template-columns:
-            1fr;
-    }
-
-    .app-card{
-
-        min-height:140px;
-    }
-
-}
-
-
-@media(max-width:390px){
-
-    .page-title span{
-
-        display:none;
-    }
-
-    .hero h1{
-
-        font-size:25px;
-    }
-
-    .kpi-grid{
-
-        grid-template-columns:
-            1fr 1fr;
-    }
-
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media(prefers-reduced-motion:reduce){
-
-    *,
-    *::before,
-    *::after{
-
-        animation:none!important;
-
-        transition:none!important;
-    }
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BAHI CLOUD — AI COMMAND CENTER</title>
+    <style>
+        /* ==========================================================
+           1. CSS Variables
+           ========================================================== */
+        :root {
+            --bg-base: #03060B;
+            --bg-surface: #07101B;
+            --bg-surface-glass: rgba(7, 16, 27, 0.8);
+            --bg-card-glass: rgba(11, 22, 38, 0.6);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(0, 229, 255, 0.3);
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --accent-cyan: #00E5FF;
+            --accent-blue: #4E7CFF;
+            --accent-purple: #9A5CFF;
+            --accent-green: #42FFB1;
+            
+            --header-height: 64px;
+            --sidebar-width: 320px;
+            --font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ==========================================================
+           2. Global & Reset
+           ========================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100vw;
+            height: 100dvh;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* App Shell Container */
+        .app-shell {
+            position: relative;
+            width: 100vw;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 0%, #0a192f 0%, var(--bg-base) 70%);
+        }
+
+        /* ==========================================================
+           3. Header
+           ========================================================== */
+        .app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            background: var(--bg-surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-right, .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-btn {
+            background: transparent;
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .menu-btn:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--bg-base);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+        }
+
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #FFF 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(66, 255, 177, 0.08);
+            border: 1px solid rgba(66, 255, 177, 0.2);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 12px var(--accent-green); }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        .current-page-indicator {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .current-page-indicator {
+                display: block;
+            }
+        }
+
+        /* ==========================================================
+           4. Sidebar & Overlay
+           ========================================================== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 6, 11, 0.7);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 150;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .app-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: var(--sidebar-width);
+            max-width: 85vw;
+            height: 100dvh;
+            background: var(--bg-surface);
+            border-left: 1px solid var(--border-glass);
+            z-index: 200;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .app-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .sidebar-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .close-sidebar-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .close-sidebar-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-bottom: calc(40px + env(safe-area-inset-bottom));
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: right;
+            width: 100%;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+            border-color: var(--border-glass);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(78, 124, 255, 0.05));
+            border-color: var(--border-glow);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* ==========================================================
+           5. Main Workspace & Hero
+           ========================================================== */
+        .main-workspace {
+            position: absolute;
+            top: var(--header-height);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            padding-bottom: calc(80px + env(safe-area-inset-bottom));
+            scroll-behavior: smooth;
+        }
+
+        .view-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .view-container.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Home View Content */
+        .home-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            width: 100%;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(154, 92, 255, 0.1);
+            border: 1px solid rgba(154, 92, 255, 0.3);
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(154, 92, 255, 0.15);
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .neon-gradient-text {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 50%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* ==========================================================
+           6. Cards Grid
+           ========================================================== */
+        .cards-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cards-section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border-glass);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            width: 100%;
+        }
+
+        .service-card {
+            background: var(--bg-card-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 24px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-glow);
+            background: rgba(11, 22, 38, 0.85);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 229, 255, 0.1);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .card-icon-wrapper {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: rgba(0, 229, 255, 0.05);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+        }
+
+        .card-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--border-glass);
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .card-action-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+        }
+
+        .service-card:hover .card-action-text {
+            gap: 12px;
+        }
+
+        /* ==========================================================
+           7. Application Iframe View
+           ========================================================== */
+        .app-iframe-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-base);
+        }
+
+        .app-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: var(--bg-base);
+        }
+
+        /* ==========================================================
+           8. Responsive Media Queries
+           ========================================================== */
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 0 16px;
+            }
+            .home-content {
+                padding: 24px 16px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-title {
+                font-size: 0.95rem;
+            }
+            .system-status {
+                display: none;
+            }
+        }
+    </style>
 </head>
-
-
 <body>
 
-
-<div class="app" id="app">
-
-
-    <!-- ================================================
-         EDGE DETECTION
-    ================================================= -->
-
-    <div class="edge-top"></div>
-
-    <div class="edge-right"></div>
-
-
-    <!-- ================================================
-         TOPBAR
-    ================================================= -->
-
-    <header class="topbar" id="topbar">
-
-
-        <button
-            class="menu-button"
-            id="menuButton"
-            aria-label="فتح القائمة"
-        >
-            ☰
-        </button>
-
-
-        <div class="page-title">
-
-            <strong id="pageTitle">
-                مركز القيادة
-            </strong>
-
-            <span>
-                BAHI CLOUD / NEURAL OS
-            </span>
-
-        </div>
-
-
-        <div class="top-space"></div>
-
-
-        <div class="system-pill">
-
-            <i></i>
-
-            SYSTEM ONLINE
-
-        </div>
-
-
-        <button
-            class="top-button"
-            id="focusButton"
-            title="وضع التركيز"
-        >
-            ◉
-        </button>
-
-
-        <button
-            class="top-button"
-            id="fullscreenButton"
-            title="ملء الشاشة"
-        >
-            ⛶
-        </button>
-
-    </header>
-
-
-    <!-- ================================================
-         SIDEBAR BACKDROP
-    ================================================= -->
-
-    <div
-        class="sidebar-backdrop"
-        id="sidebarBackdrop"
-    ></div>
-
-
-    <!-- ================================================
-         SIDEBAR
-    ================================================= -->
-
-    <aside
-        class="sidebar"
-        id="sidebar"
-    >
-
-
-        <button
-            class="close-sidebar"
-            id="closeSidebar"
-        >
-            ×
-        </button>
-
-
-        <div class="brand">
-
-            <div class="brand-icon">
-                ✦
+    <div class="app-shell">
+        
+        <!-- ================= Header ================= -->
+        <header class="app-header">
+            <div class="header-right">
+                <button class="menu-btn" id="menuToggle" aria-label="فتح القائمة">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <a href="#" class="brand-logo" id="homeLinkBtn">
+                    <div class="logo-icon">BC</div>
+                    <span class="brand-title">BAHI CLOUD</span>
+                </a>
             </div>
 
-            <div class="brand-name">
-                BAHI <span>CLOUD</span>
-            </div>
-
-        </div>
-
-
-        <div class="system-status">
-
-            <span class="status-dot"></span>
-
-            <span>
-                NEURAL CORE ONLINE
-            </span>
-
-        </div>
-
-
-        <div class="nav-title">
-            COMMAND CENTER
-        </div>
-
-
-        <nav class="nav">
-
-
-            <button
-                class="nav-item active"
-                data-page="home"
-            >
-
-                <span class="nav-icon">
-                    ⌂
-                </span>
-
-                <span class="nav-content">
-
-                    <span class="nav-name">
-                        الرئيسية
-                    </span>
-
-                    <span class="nav-desc">
-                        Command Center
-                    </span>
-
-                </span>
-
-            </button>
-
-
-            <button
-                class="nav-item"
-                data-page="agent"
-            >
-
-                <span class="nav-icon">
-                    🤖
-                </span>
-
-                <span class="nav-content">
-
-                    <span class="nav-name">
-                        الوكيل الخارق
-                    </span>
-
-                    <span class="nav-desc">
-                        Super AI Agent
-                    </span>
-
-                </span>
-
-            </button>
-
-
-            <button
-                class="nav-item"
-                data-page="debate"
-            >
-
-                <span class="nav-icon">
-                    ⚡
-                </span>
-
-                <span class="nav-content">
-
-                    <span class="nav-name">
-                        ساحة النقاش
-                    </span>
-
-                    <span class="nav-desc">
-                        Intelligent Debate
-                    </span>
-
-                </span>
-
-            </button>
-
-
-            <button
-                class="nav-item"
-                data-page="models"
-            >
-
-                <span class="nav-icon">
-                    ◈
-                </span>
-
-                <span class="nav-content">
-
-                    <span class="nav-name">
-                        النماذج الخارقة
-                    </span>
-
-                    <span class="nav-desc">
-                        GPT 5.6 Luna
-                    </span>
-
-                </span>
-
-            </button>
-
-
-        </nav>
-
-
-        <div class="sidebar-footer">
-
-            <div class="version">
-                BAHI NEURAL OS · 2026
-            </div>
-
-        </div>
-
-    </aside>
-
-
-    <!-- ================================================
-         FLOATING REVEAL BUTTON
-    ================================================= -->
-
-    <button
-        class="reveal-control"
-        id="revealControl"
-        title="إظهار الواجهة"
-    >
-        ◈
-    </button>
-
-
-    <!-- ================================================
-         WORKSPACE
-    ================================================= -->
-
-    <main class="workspace">
-
-
-        <!-- =============================================
-             HOME
-        ============================================== -->
-
-        <section
-            class="home"
-            id="home"
-        >
-
-            <div class="home-inner">
-
-
-                <div class="hero">
-
-                    <div class="eyebrow">
-                        NEURAL COMMAND CENTER
-                    </div>
-
-                    <h1>
-
-                        مركز القيادة
-
-                        <span>
-                            الذكي
-                        </span>
-
-                    </h1>
-
-                    <p>
-
-                        منصة موحدة لإدارة أدوات الذكاء
-                        الاصطناعي والوكلاء وساحات النقاش
-                        والنماذج المتقدمة، داخل بيئة واحدة
-                        سريعة واحترافية.
-
-                    </p>
-
+            <div class="header-left">
+                <div class="current-page-indicator" id="pageIndicator">مركز التحكم الرئيسي</div>
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    <span>SYSTEM ONLINE</span>
                 </div>
+            </div>
+        </header>
 
+        <!-- ================= Sidebar & Overlay ================= -->
+        <div class="overlay" id="sidebarOverlay"></div>
+        
+        <aside class="app-sidebar" id="appSidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">قائمة النظام</span>
+                <button class="close-sidebar-btn" id="closeSidebar" aria-label="إغلاق القائمة">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Dynamically populated via JavaScript -->
+            </nav>
+        </aside>
 
-                <!-- =====================================
-                     KPI
-                ====================================== -->
-
-                <div class="kpi-grid">
-
-
-                    <div class="kpi">
-
-                        <div class="kpi-label">
-                            ACTIVE SYSTEMS
+        <!-- ================= Main Workspace ================= -->
+        <main class="main-workspace" id="mainWorkspace">
+            
+            <!-- Home View -->
+            <div class="view-container active" id="homeView">
+                <div class="home-content">
+                    <section class="hero-section">
+                        <div class="hero-badge">
+                            <span>✦ NEXT GENERATION AI COMMAND CENTER</span>
                         </div>
-
-                        <div class="kpi-value">
-                            04
-                            <span>ONLINE</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="kpi">
-
-                        <div class="kpi-label">
-                            SYSTEM STATUS
-                        </div>
-
-                        <div class="kpi-value">
-                            99.9%
-                            <span>LIVE</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="kpi">
-
-                        <div class="kpi-label">
-                            AI SERVICES
-                        </div>
-
-                        <div class="kpi-value">
-                            03
-                            <span>READY</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="kpi">
-
-                        <div class="kpi-label">
-                            ARCHITECTURE
-                        </div>
-
-                        <div class="kpi-value">
-                            MFE
-                            <span>2026</span>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- =====================================
-                     MAIN GRID
-                ====================================== -->
-
-                <div class="dashboard-grid">
-
-
-                    <!-- =================================
-                         APPS
-                    ================================== -->
-
-                    <section class="panel">
-
-                        <div class="panel-header">
-
-                            <h2>
-                                الأنظمة الذكية
-                            </h2>
-
-                            <span>
-                                MICRO FRONTENDS
-                            </span>
-
-                        </div>
-
-
-                        <div class="app-list">
-
-
-                            <article class="app-card">
-
-                                <div class="app-card-icon">
-                                    🤖
-                                </div>
-
-                                <h3>
-                                    الوكيل الذكي الخارق
-                                </h3>
-
-                                <div class="subtitle">
-                                    SUPER AI AGENT
-                                </div>
-
-                                <p>
-                                    تشغيل الوكيل الذكي المتقدم
-                                    داخل مساحة العمل الموحدة.
-                                </p>
-
-                                <button
-                                    class="open-app"
-                                    data-open="agent"
-                                >
-                                    تشغيل →
-                                </button>
-
-                            </article>
-
-
-                            <article class="app-card purple">
-
-                                <div class="app-card-icon">
-                                    ⚡
-                                </div>
-
-                                <h3>
-                                    ساحة النقاش العباقرة
-                                </h3>
-
-                                <div class="subtitle">
-                                    INTELLIGENT DEBATE
-                                </div>
-
-                                <p>
-                                    مساحة تحليل ونقاش متعددة
-                                    العقول والأفكار.
-                                </p>
-
-                                <button
-                                    class="open-app"
-                                    data-open="debate"
-                                >
-                                    دخول →
-                                </button>
-
-                            </article>
-
-
-                            <article class="app-card pink">
-
-                                <div class="app-card-icon">
-                                    ◈
-                                </div>
-
-                                <h3>
-                                    النماذج الخارقة
-                                </h3>
-
-                                <div class="subtitle">
-                                    GPT 5.6 LUNA
-                                </div>
-
-                                <p>
-                                    الوصول إلى Duck.ai والنماذج
-                                    الذكية الخارجية.
-                                </p>
-
-                                <button
-                                    class="open-app"
-                                    data-open="models"
-                                >
-                                    فتح →
-                                </button>
-
-                            </article>
-
-
-                            <article class="app-card">
-
-                                <div class="app-card-icon">
-                                    ◇
-                                </div>
-
-                                <h3>
-                                    Neural App Shell
-                                </h3>
-
-                                <div class="subtitle">
-                                    CORE ARCHITECTURE
-                                </div>
-
-                                <p>
-                                    Micro-Frontend Shell موحد
-                                    لإدارة التطبيقات المستقلة.
-                                </p>
-
-                                <button
-                                    class="open-app"
-                                    id="focusFromHome"
-                                >
-                                    وضع التركيز →
-                                </button>
-
-                            </article>
-
-
-                        </div>
-
+                        <h1 class="hero-title">
+                            مركز <span class="neon-gradient-text">الذكاء الخارق</span>
+                        </h1>
+                        <p class="hero-description">
+                            منصة موحدة للوصول إلى الوكلاء الذكيين وساحات النقاش والنماذج المتقدمة من واجهة واحدة بأعلى معايير الأداء والأمان لعام 2026.
+                        </p>
                     </section>
 
-
-                    <!-- =================================
-                         ACTIVITY
-                    ================================== -->
-
-                    <section class="panel">
-
-                        <div class="panel-header">
-
-                            <h2>
-                                حالة النظام
-                            </h2>
-
-                            <span>
-                                LIVE
-                            </span>
-
+                    <section class="services-section">
+                        <div class="cards-section-title">التطبيقات والخدمات النشطة</div>
+                        <div class="cards-grid" id="cardsGrid">
+                            <!-- Dynamically populated via JavaScript -->
                         </div>
-
-
-                        <div class="activity">
-
-
-                            <div class="activity-item">
-
-                                <div class="activity-icon">
-                                    ✓
-                                </div>
-
-                                <div class="activity-text">
-
-                                    <strong>
-                                        Neural Core
-                                    </strong>
-
-                                    <span>
-                                        النظام يعمل بشكل طبيعي
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="activity-item">
-
-                                <div class="activity-icon">
-                                    🤖
-                                </div>
-
-                                <div class="activity-text">
-
-                                    <strong>
-                                        AI Agent
-                                    </strong>
-
-                                    <span>
-                                        جاهز للتشغيل
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="activity-item">
-
-                                <div class="activity-icon">
-                                    ⚡
-                                </div>
-
-                                <div class="activity-text">
-
-                                    <strong>
-                                        Debate Arena
-                                    </strong>
-
-                                    <span>
-                                        قناة النقاش متاحة
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="activity-item">
-
-                                <div class="activity-icon">
-                                    ◈
-                                </div>
-
-                                <div class="activity-text">
-
-                                    <strong>
-                                        Model Gateway
-                                    </strong>
-
-                                    <span>
-                                        GPT 5.6 Luna Interface
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
                     </section>
-
-
                 </div>
-
-
             </div>
 
-        </section>
-
-
-        <!-- =============================================
-             AGENT
-        ============================================== -->
-
-        <section
-            class="app-view"
-            id="agentView"
-        >
-
-            <div
-                class="app-loader"
-                id="agentLoader"
-            >
-
-                <div class="loader-box">
-
-                    <div class="loader-ring"></div>
-
-                    <strong>
-                        جاري تشغيل الوكيل الخارق
-                    </strong>
-
-                    <span>
-                        Loading AI Micro-Frontend...
-                    </span>
-
+            <!-- Application Iframe View -->
+            <div class="view-container" id="appView">
+                <div class="app-iframe-container">
+                    <iframe class="app-iframe" id="serviceIframe" referrerpolicy="strict-origin-when-cross-origin" allow="fullscreen; clipboard-read; clipboard-write"></iframe>
                 </div>
-
             </div>
 
-
-            <iframe
-                id="agentFrame"
-                class="app-frame"
-                title="الوكيل الذكي الخارق"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                sandbox="
-                    allow-forms
-                    allow-modals
-                    allow-popups
-                    allow-presentation
-                    allow-scripts
-                    allow-same-origin
-                "
-                src="about:blank"
-            ></iframe>
-
-        </section>
-
-
-        <!-- =============================================
-             DEBATE
-        ============================================== -->
-
-        <section
-            class="app-view"
-            id="debateView"
-        >
-
-            <div
-                class="app-loader"
-                id="debateLoader"
-            >
-
-                <div class="loader-box">
-
-                    <div class="loader-ring"></div>
-
-                    <strong>
-                        جاري فتح ساحة النقاش
-                    </strong>
-
-                    <span>
-                        Loading Debate Micro-Frontend...
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <iframe
-                id="debateFrame"
-                class="app-frame"
-                title="ساحة النقاش"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                sandbox="
-                    allow-forms
-                    allow-modals
-                    allow-popups
-                    allow-presentation
-                    allow-scripts
-                    allow-same-origin
-                "
-                src="about:blank"
-            ></iframe>
-
-        </section>
-
-
-        <!-- =============================================
-             MODELS
-        ============================================== -->
-
-        <section
-            class="app-view"
-            id="modelsView"
-        >
-
-            <div
-                class="app-loader"
-                id="modelsLoader"
-            >
-
-                <div class="loader-box">
-
-                    <div class="loader-ring"></div>
-
-                    <strong>
-                        جاري فتح النماذج الخارقة
-                    </strong>
-
-                    <span>
-                        GPT 5.6 Luna · Duck.ai
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <iframe
-                id="modelsFrame"
-                class="app-frame"
-                title="النماذج الخارقة"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-                sandbox="
-                    allow-forms
-                    allow-modals
-                    allow-popups
-                    allow-presentation
-                    allow-scripts
-                    allow-same-origin
-                "
-                src="about:blank"
-            ></iframe>
-
-        </section>
-
-
-    </main>
-
-</div>
-
-
-<script>
-
-/* =========================================================
-   APPLICATION REGISTRY
-========================================================= */
-
-const APPS = {
-
-    agent:{
-
-        title:
-            "الوكيل الخارق",
-
-        url:
-            "https://bahi-cloud.github.io/pro-max-problem/",
-
-        frame:
-            document.getElementById(
-                "agentFrame"
-            ),
-
-        loader:
-            document.getElementById(
-                "agentLoader"
-            )
-
-    },
-
-
-    debate:{
-
-        title:
-            "ساحة النقاش",
-
-        url:
-            "https://bahi-cloud.github.io/sa7a-ni9ach-pro/",
-
-        frame:
-            document.getElementById(
-                "debateFrame"
-            ),
-
-        loader:
-            document.getElementById(
-                "debateLoader"
-            )
-
-    },
-
-
-    models:{
-
-        title:
-            "النماذج الخارقة",
-
-        url:
-            "https://duck.ai/",
-
-        frame:
-            document.getElementById(
-                "modelsFrame"
-            ),
-
-        loader:
-            document.getElementById(
-                "modelsLoader"
-            )
-
-    }
-
-};
-
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const app =
-    document.getElementById("app");
-
-const sidebar =
-    document.getElementById("sidebar");
-
-const backdrop =
-    document.getElementById(
-        "sidebarBackdrop"
-    );
-
-const menuButton =
-    document.getElementById(
-        "menuButton"
-    );
-
-const closeSidebar =
-    document.getElementById(
-        "closeSidebar"
-    );
-
-const pageTitle =
-    document.getElementById(
-        "pageTitle"
-    );
-
-const focusButton =
-    document.getElementById(
-        "focusButton"
-    );
-
-const fullscreenButton =
-    document.getElementById(
-        "fullscreenButton"
-    );
-
-const revealControl =
-    document.getElementById(
-        "revealControl"
-    );
-
-const home =
-    document.getElementById("home");
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let currentPage =
-    "home";
-
-let focusMode =
-    false;
-
-const loadedApps =
-    {};
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-function openSidebar(){
-
-    /*
-       إذا كان Focus Mode مفعلاً،
-       نظهر الواجهة مؤقتاً.
-    */
-
-    app.classList.remove(
-        "chrome-hidden"
-    );
-
-
-    sidebar.classList.add(
-        "open"
-    );
-
-    backdrop.classList.add(
-        "active"
-    );
-
-}
-
-
-function closeSidebarMenu(){
-
-    sidebar.classList.remove(
-        "open"
-    );
-
-    backdrop.classList.remove(
-        "active"
-    );
-
-}
-
-
-/* =========================================================
-   MENU BUTTON
-========================================================= */
-
-menuButton.addEventListener(
-    "click",
-    event => {
-
-        event.stopPropagation();
-
-        if(
-            sidebar.classList.contains(
-                "open"
-            )
-        ){
-
-            closeSidebarMenu();
-
-        }else{
-
-            openSidebar();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   CLOSE SIDEBAR
-========================================================= */
-
-closeSidebar.addEventListener(
-    "click",
-    closeSidebarMenu
-);
-
-
-/* =========================================================
-   BACKDROP
-========================================================= */
-
-backdrop.addEventListener(
-    "click",
-    closeSidebarMenu
-);
-
-
-/* =========================================================
-   CLICK OUTSIDE
-========================================================= */
-
-document.addEventListener(
-    "pointerdown",
-    event => {
-
-        if(
-            sidebar.classList.contains(
-                "open"
-            ) &&
-            !sidebar.contains(
-                event.target
-            ) &&
-            !menuButton.contains(
-                event.target
-            )
-        ){
-
-            closeSidebarMenu();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   FOCUS MODE
-========================================================= */
-
-function enableFocusMode(){
-
-    focusMode = true;
-
-    app.classList.add(
-        "chrome-hidden"
-    );
-
-    closeSidebarMenu();
-
-}
-
-
-function disableFocusMode(){
-
-    focusMode = false;
-
-    app.classList.remove(
-        "chrome-hidden"
-    );
-
-}
-
-
-function toggleFocusMode(){
-
-    if(focusMode){
-
-        disableFocusMode();
-
-    }else{
-
-        enableFocusMode();
-
-    }
-
-}
-
-
-/* =========================================================
-   FOCUS BUTTON
-========================================================= */
-
-focusButton.addEventListener(
-    "click",
-    toggleFocusMode
-);
-
-
-/* =========================================================
-   FLOATING REVEAL BUTTON
-========================================================= */
-
-revealControl.addEventListener(
-    "click",
-    () => {
-
-        disableFocusMode();
-
-        openSidebar();
-
-    }
-);
-
-
-/* =========================================================
-   EDGE REVEAL
-========================================================= */
-
-let topTimer;
-let rightTimer;
-
-
-/*
-   عندما يكون الماوس قريباً جداً
-   من أعلى الشاشة، أظهر الـTopbar.
-*/
-
-document.addEventListener(
-    "mousemove",
-    event => {
-
-        if(
-            event.clientY <= 8
-        ){
-
-            app.classList.remove(
-                "chrome-hidden"
-            );
-
-            clearTimeout(
-                topTimer
-            );
-
-            /*
-               لا نختفي مباشرة حتى
-               يستطيع المستخدم استعماله.
-            */
-
-        }
-
-
-        /*
-           حافة اليمين
-        */
-
-        if(
-            event.clientX >=
-            window.innerWidth - 8
-        ){
-
-            if(
-                !focusMode
-            ){
-
-                openSidebar();
-
-            }
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   LOAD MICRO FRONTEND
-========================================================= */
-
-function loadApp(name){
-
-    const item =
-        APPS[name];
-
-    if(!item){
-
-        return;
-
-    }
-
-
-    if(
-        loadedApps[name]
-    ){
-
-        return;
-
-    }
-
-
-    item.loader.style.display =
-        "grid";
-
-    item.loader.style.opacity =
-        "1";
-
-
-    item.frame.src =
-        item.url;
-
-
-    item.frame.addEventListener(
-        "load",
-        () => {
-
-            item.loader.style.opacity =
-                "0";
-
-            setTimeout(
-                () => {
-
-                    item.loader.style.display =
-                        "none";
-
-                },
-                300
-            );
-
-        },
-        {
-            once:true
-        }
-    );
-
-
-    loadedApps[name] =
-        true;
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function navigate(page){
-
-    currentPage =
-        page;
-
-
-    /*
-       أغلق القائمة
-    */
-
-    closeSidebarMenu();
-
-
-    /*
-       إذا فتح تطبيقاً،
-       فعّل Focus Mode.
-    */
-
-    if(page !== "home"){
-
-        enableFocusMode();
-
-    }
-
-
-    /*
-       HOME
-    */
-
-    if(page === "home"){
-
-        home.classList.remove(
-            "hidden"
-        );
-
-
-        document
-            .querySelectorAll(
-                ".app-view"
-            )
-            .forEach(
-                view =>
-                    view.classList.remove(
-                        "active"
-                    )
-            );
-
-
-        pageTitle.textContent =
-            "مركز القيادة";
-
-
-        disableFocusMode();
-
-
-        return;
-
-    }
-
-
-    /*
-       Hide Home
-    */
-
-    home.classList.add(
-        "hidden"
-    );
-
-
-    /*
-       Hide other applications
-    */
-
-    document
-        .querySelectorAll(
-            ".app-view"
-        )
-        .forEach(
-            view =>
-                view.classList.remove(
-                    "active"
-                )
-        );
-
-
-    /*
-       Show requested app
-    */
-
-    const view =
-        document.getElementById(
-            page + "View"
-        );
-
-
-    if(view){
-
-        view.classList.add(
-            "active"
-        );
-
-    }
-
-
-    /*
-       Update title
-    */
-
-    pageTitle.textContent =
-        APPS[page]?.title ||
-        "Application";
-
-
-    /*
-       Load
-    */
-
-    loadApp(page);
-
-}
-
-
-/* =========================================================
-   NAV ITEMS
-========================================================= */
-
-document
-    .querySelectorAll(
-        ".nav-item"
-    )
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    /*
-                       active state
-                    */
-
-                    document
-                        .querySelectorAll(
-                            ".nav-item"
-                        )
-                        .forEach(
-                            item =>
-                                item.classList.toggle(
-                                    "active",
-                                    item === button
-                                )
-                        );
-
-
-                    navigate(
-                        button.dataset.page
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   HOME APP BUTTONS
-========================================================= */
-
-document
-    .querySelectorAll(
-        "[data-open]"
-    )
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    navigate(
-                        button.dataset.open
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   FOCUS FROM HOME
-========================================================= */
-
-document
-    .getElementById(
-        "focusFromHome"
-    )
-    .addEventListener(
-        "click",
-        enableFocusMode
-    );
-
-
-/* =========================================================
-   ESC
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if(
-            event.key === "Escape"
-        ){
-
-            closeSidebarMenu();
-
-            enableFocusMode();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   KEYBOARD SHORTCUTS
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if(
-            !event.ctrlKey &&
-            !event.metaKey
-        ){
-
-            /*
-               F = Focus Mode
-            */
-
-            if(
-                event.key.toLowerCase()
-                === "f"
-            ){
-
-                toggleFocusMode();
-
-            }
-
-            return;
-
-        }
-
-
-        switch(event.key){
-
-            case "1":
-
-                event.preventDefault();
-
-                navigate("home");
-
-                break;
-
-
-            case "2":
-
-                event.preventDefault();
-
-                navigate("agent");
-
-                break;
-
-
-            case "3":
-
-                event.preventDefault();
-
-                navigate("debate");
-
-                break;
-
-
-            case "4":
-
-                event.preventDefault();
-
-                navigate("models");
-
-                break;
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   FULLSCREEN
-========================================================= */
-
-fullscreenButton.addEventListener(
-    "click",
-    async () => {
-
-        try{
-
-            if(
-                !document.fullscreenElement
-            ){
-
-                await document
-                    .documentElement
-                    .requestFullscreen();
-
-            }else{
-
-                await document
-                    .exitFullscreen();
-
-            }
-
-        }catch(error){
-
-            console.warn(
-                "Fullscreen unavailable",
-                error
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   AUTO HIDE
-========================================================= */
-
-/*
-   بعد فتح أحد التطبيقات،
-   ننتظر قليلاً ثم نضع الواجهة
-   في وضع التركيز.
-*/
-
-function scheduleAutoFocus(){
-
-    clearTimeout(
-        window.__focusTimer
-    );
-
-    window.__focusTimer =
-        setTimeout(
-            () => {
-
-                if(
-                    currentPage !== "home"
-                ){
-
-                    enableFocusMode();
-
-                }
-
+        </main>
+
+    </div>
+
+    <!-- ================= JavaScript Architecture ================= -->
+    <script>
+        /* ==========================================================
+           10. Links Configuration
+           ========================================================== */
+        // ADD NEW LINKS HERE
+        const LINKS = [
+            {
+                id: "agent",
+                name: "الوكيل الخارق",
+                description: "الوكيل الذكي المتقدم لتنفيذ المهام المعقدة وتحليل المشاكل.",
+                icon: "🤖",
+                badge: "AI AGENT",
+                url: "https://bahi-cloud.github.io/pro-max-problem/"
             },
-            1800
-        );
+            {
+                id: "debate",
+                name: "ساحة النقاش",
+                description: "بيئة تفاعلية لمناقشة وتحليل الأفكار بين النماذج المتعددة.",
+                icon: "⚡",
+                badge: "DEBATE ARENA",
+                url: "https://bahi-cloud.github.io/sa7a-ni9ach-pro/"
+            },
+            {
+                id: "models",
+                name: "النماذج الخارقة",
+                description: "GPT 5.6 Luna - الوصول المباشر لأحدث نماذج الذكاء الاصطناعي.",
+                icon: "◈",
+                badge: "GPT 5.6 Luna",
+                url: "https://duck.ai/"
+            },
+            {
+                id: "example1",
+                name: "المساعد المالي الذكي",
+                description: "تحليل الأسواق والعملات والتنبؤ بالاتجاهات المستقبلية.",
+                icon: "📈",
+                badge: "FINANCE",
+                url: "https://example.com/"
+            },
+            {
+                id: "example2",
+                name: "أتمتة العمليات",
+                description: "ربط سير العمل الذكي وإدارة المهام المبرمجة بالكامل.",
+                icon: "⚙️",
+                badge: "AUTOMATION",
+                url: "https://example.com/"
+            }
+        ];
 
-}
+        document.addEventListener("DOMContentLoaded", () => {
+            const sidebar = document.getElementById("appSidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            const menuToggle = document.getElementById("menuToggle");
+            const closeSidebarBtn = document.getElementById("closeSidebar");
+            const sidebarNav = document.getElementById("sidebarNav");
+            const cardsGrid = document.getElementById("cardsGrid");
+            const homeView = document.getElementById("homeView");
+            const appView = document.getElementById("appView");
+            const serviceIframe = document.getElementById("serviceIframe");
+            const homeLinkBtn = document.getElementById("homeLinkBtn");
+            const pageIndicator = document.getElementById("pageIndicator");
+            const mainWorkspace = document.getElementById("mainWorkspace");
 
+            // Render Sidebar Navigation & Cards dynamically
+            function renderDynamicContent() {
+                // Render Home link in sidebar first
+                let sidebarHTML = `
+                    <button class="nav-item active" data-id="home">
+                        <span class="nav-icon">🏠</span>
+                        <span>الرئيسية</span>
+                    </button>
+                `;
 
-/* =========================================================
-   INITIALIZATION
-========================================================= */
+                let cardsHTML = "";
 
-navigate("home");
+                LINKS.forEach(link => {
+                    sidebarHTML += `
+                        <button class="nav-item" data-id="${link.id}">
+                            <span class="nav-icon">${link.icon}</span>
+                            <span>${link.name}</span>
+                        </button>
+                    `;
 
+                    cardsHTML += `
+                        <div class="service-card" data-id="${link.id}">
+                            <div class="card-top">
+                                <div class="card-icon-wrapper">${link.icon}</div>
+                                <span class="card-badge">${link.badge || 'ACTIVE'}</span>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">${link.name}</h3>
+                                <p class="card-desc">${link.description}</p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="card-action-text">
+                                    تشغيل الخدمة
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                });
 
-/*
-   افتح القائمة مرة واحدة
-   عند البداية فقط.
-*/
+                sidebarNav.innerHTML = sidebarHTML;
+                cardsGrid.innerHTML = cardsHTML;
 
-setTimeout(
-    () => {
+                // Attach Event Listeners to generated items
+                document.querySelectorAll(".nav-item").forEach(item => {
+                    item.addEventListener("click", () => {
+                        const id = item.getAttribute("data-id");
+                        handleNavigation(id);
+                        closeSidebar();
+                    });
+                });
 
-        openSidebar();
+                document.querySelectorAll(".service-card").forEach(card => {
+                    card.addEventListener("click", () => {
+                        const id = card.getAttribute("data-id");
+                        handleNavigation(id);
+                    });
+                });
+            }
 
-    },
-    350
-);
+            // Navigation Controller (App Shell Router)
+            function handleNavigation(id) {
+                // Update Active states in Sidebar
+                document.querySelectorAll(".nav-item").forEach(nav => {
+                    if (nav.getAttribute("data-id") === id) {
+                        nav.classList.add("active");
+                    } else {
+                        nav.classList.remove("active");
+                    }
+                });
 
+                if (id === "home") {
+                    appView.classList.remove("active");
+                    homeView.classList.add("active");
+                    serviceIframe.src = "";
+                    pageIndicator.textContent = "مركز التحكم الرئيسي";
+                    mainWorkspace.scrollTop = 0;
+                } else {
+                    const targetLink = LINKS.find(l => l.id === id);
+                    if (targetLink) {
+                        homeView.classList.remove("active");
+                        appView.classList.add("active");
+                        serviceIframe.src = targetLink.url;
+                        pageIndicator.textContent = targetLink.name;
+                    }
+                }
+            }
 
-/* =========================================================
-   MOBILE:
-   عندما يلمس المستخدم محتوى التطبيق
-   نغلق الـChrome.
-========================================================= */
+            // Sidebar Controls
+            function openSidebar() {
+                sidebar.classList.add("active");
+                overlay.classList.add("active");
+            }
 
-document.addEventListener(
-    "touchstart",
-    event => {
+            function closeSidebar() {
+                sidebar.classList.remove("active");
+                overlay.classList.remove("active");
+            }
 
-        if(
-            currentPage !== "home" &&
-            !sidebar.contains(
-                event.target
-            )
-        ){
+            menuToggle.addEventListener("click", openSidebar);
+            closeSidebarBtn.addEventListener("click", closeSidebar);
+            overlay.addEventListener("click", closeSidebar);
 
-            enableFocusMode();
+            // ESC Key Handler
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    closeSidebar();
+                }
+            });
 
-        }
+            // Home Branding Click
+            homeLinkBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                handleNavigation("home");
+            });
 
-    },
-    {
-        passive:true
-    }
-);
-
-</script>
-
+            // Initialize App
+            renderDynamicContent();
+        });
+    </script>
 </body>
 </html>
